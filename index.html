@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>CRYPTO MINER</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4355916824484692" crossorigin="anonymous"></script>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
@@ -15,7 +16,7 @@
   --dark:       #020408;
   --dark2:      #060C14;
   --dark3:      #0A1220;
-  /* couleurs dynamiques, changées via JS */
+  /* Skin variables (overridden by JS) */
   --skin-accent:  #F7931A;
   --skin-accent2: #627EEA;
   --skin-tab:     #F7931A;
@@ -27,7 +28,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-family:'Orbitron',monospace;user-select:none;}
 
-/* les différentes couches superposées */
+/* ── LAYERS ── */
 #layer-bg    {position:fixed;inset:0;z-index:0;}
 #layer-fx    {position:fixed;inset:0;z-index:2;pointer-events:none;}
 #layer-glitch{position:fixed;inset:0;z-index:8;pointer-events:none;opacity:0;}
@@ -35,15 +36,17 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
 #flash       {position:fixed;inset:0;z-index:90;pointer-events:none;background:#fff;opacity:0;}
 #flash-green {position:fixed;inset:0;z-index:89;pointer-events:none;background:var(--neon-green);opacity:0;}
 
-/* effet scanlines rétro */
+/* ── SCANLINES ── */
 #scanlines{position:fixed;inset:0;z-index:5;pointer-events:none;
   background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,136,.012) 2px,rgba(0,255,136,.012) 4px);}
 
-/* assombrit les bords */
+/* ── VIGNETTE ── */
 #vignette{position:fixed;inset:0;z-index:4;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 25%,rgba(0,0,0,.97) 100%);}
 
-/* écran d'intro */
+/* ─────────────────────────────────────────
+   INTRO SCREEN
+───────────────────────────────────────── */
 #intro{position:fixed;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;flex-direction:column;}
 
 .cin-line{
@@ -56,7 +59,7 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
   text-shadow:0 0 20px rgba(255,255,255,.3);
 }
 
-/* le gros ₿ au centre */
+/* Bitcoin symbol */
 #btc-symbol{
   position:absolute;opacity:0;
   font-size:clamp(60px,15vw,160px);
@@ -66,10 +69,10 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
   transform:scale(.5);
 }
 
-/* tunnel visuel de l'intro */
+/* Data tunnel */
 #tunnel{position:fixed;inset:0;z-index:15;pointer-events:none;opacity:0;}
 
-/* logo affiché à la fin de l'intro */
+/* LOGO FINAL */
 #logo-final{
   position:absolute;text-align:center;opacity:0;
   transform:scale(.3) translateY(20px);
@@ -102,7 +105,9 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
   font-family:'Share Tech Mono',monospace;
 }
 
-/* choix de langue */
+/* ─────────────────────────────────────────
+   LANG SCREEN
+───────────────────────────────────────── */
 #lang-screen{
   position:fixed;inset:0;z-index:30;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -144,7 +149,9 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
   opacity:.3;
 }
 
-/* menu principal */
+/* ─────────────────────────────────────────
+   MAIN MENU
+───────────────────────────────────────── */
 #menu-screen{
   position:fixed;inset:0;z-index:30;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -197,7 +204,9 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
 .menu-btn.danger{border-color:rgba(255,50,50,.3);color:#FF4560;background:rgba(255,69,96,.04);}
 .menu-btn.danger:hover{background:rgba(255,69,96,.1);border-color:#FF4560;box-shadow:0 0 25px rgba(255,69,96,.35);}
 
-/* paramètres */
+/* ─────────────────────────────────────────
+   OPTIONS
+───────────────────────────────────────── */
 #options-screen{
   position:fixed;inset:0;z-index:35;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
@@ -226,7 +235,9 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
   transition:all .2s;}
 .opts-close:hover{background:rgba(0,212,255,.12);box-shadow:0 0 20px rgba(0,212,255,.3);}
 
-/* popup confirmation quitter */
+/* ─────────────────────────────────────────
+   QUIT POPUP
+───────────────────────────────────────── */
 #quit-popup{
   position:fixed;inset:0;z-index:40;
   display:flex;align-items:center;justify-content:center;
@@ -253,7 +264,9 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
 .quit-no{background:rgba(0,255,136,.06);border:1px solid rgba(0,255,136,.3);color:var(--neon-green);}
 .quit-no:hover{background:rgba(0,255,136,.12);box-shadow:0 0 20px rgba(0,255,136,.3);}
 
-/* bouton pour passer l'intro */
+/* ─────────────────────────────────────────
+   SKIP
+───────────────────────────────────────── */
 #skip-btn{
   position:fixed;bottom:20px;right:24px;z-index:99;
   font-family:'Share Tech Mono',monospace;font-size:9px;color:rgba(0,255,136,.35);
@@ -264,10 +277,14 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
 }
 #skip-btn:hover{color:var(--neon-green);border-color:rgba(0,255,136,.4);box-shadow:0 0 15px rgba(0,255,136,.2);}
 
-
+/* ─────────────────────────────────────────
+   PARTICLES LAYER (canvas bg items)
+───────────────────────────────────────── */
 .float-particle{position:fixed;border-radius:50%;pointer-events:none;z-index:1;}
 
-/* pluie de code style matrix */
+/* ─────────────────────────────────────────
+   DATA CODE STREAM
+───────────────────────────────────────── */
 #code-stream{position:fixed;inset:0;z-index:3;pointer-events:none;overflow:hidden;opacity:0;}
 .code-col{
   position:absolute;top:-100%;
@@ -278,7 +295,7 @@ html,body{width:100vw;height:100vh;overflow:hidden;background:var(--dark);font-f
 }
 @keyframes codefall{from{transform:translateY(0)}to{transform:translateY(200vh)}}
 
-/* coins décoratifs */
+/* corner decorations */
 .corner{position:fixed;width:50px;height:50px;z-index:6;opacity:0;}
 .corner.tl{top:16px;left:16px;border-top:1px solid rgba(0,255,136,.4);border-left:1px solid rgba(0,255,136,.4);}
 .corner.tr{top:16px;right:16px;border-top:1px solid rgba(0,255,136,.4);border-right:1px solid rgba(0,255,136,.4);}
@@ -430,7 +447,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .skin-price { font-size:8px; color:var(--skin-accent); margin-top:2px; }
 .skin-price.owned { color:#00D97E; }
 
-
+/* ── Skin theming on UI elements ── */
 .tab.active          { color:var(--skin-tab) !important; border-bottom-color:var(--skin-tab) !important; }
 .btc-value           { color:var(--skin-accent) !important; }
 .btc-sub             { color:var(--skin-accent2) !important; }
@@ -592,7 +609,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .ach-popup-title { font-size:9px; color:#FFD166; font-weight:700; }
 .ach-popup-sub { font-size:7px; color:#8899BB; margin-top:2px; }
 
-
+/* ── BARRE PROCHAIN TROPHÉE ── */
 .next-ach-bar {
   padding: 6px 16px 5px;
   border-bottom: 1px solid #111B2E;
@@ -615,7 +632,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
   transition: width .4s ease;
 }
 
-/* FONDS */
+/* ── FONDS ── */
 .bg-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:6px; }
 .bg-opt {
   height:52px; border-radius:8px; border:2px solid #1A2840;
@@ -640,7 +657,14 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .btn-cancel { background: #111B2E; border: 1px solid #1A2840; border-radius: 6px; color: #8899BB; font-family:'Space Mono',monospace; font-size: 9px; padding: 7px 14px; cursor: pointer; }
 .btn-cancel:hover { border-color: #627EEA; color: #E8F0FF; }
 
-/* MINI-OBJECTIFS */
+/* ── CHART RANGE BUTTONS ── */
+.chart-range-btn {
+  padding:4px 10px;border-radius:6px;font-size:8px;font-family:'Space Mono',monospace;
+  letter-spacing:.08em;cursor:pointer;border:1px solid #1A2840;
+  background:rgba(13,20,32,.6);color:#445577;transition:all .15s;
+}
+.chart-range-btn.active { border-color:#F7931A;color:#F7931A;background:rgba(247,147,26,.08); }
+.chart-range-btn:hover  { border-color:#627EEA;color:#E8F0FF; }
 .objectives-bar {
   padding: 5px 12px;
   border-bottom: 1px solid #111B2E;
@@ -671,7 +695,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .obj-reward { font-size: 7px; color: #F7931A; margin-left: auto; }
 
 
-/* ANIMATION RENAISSANCE */
+/* ── ANIMATION RENAISSANCE ── */
 #rebirth-overlay {
   position: fixed; inset: 0; z-index: 500;
   display: flex; align-items: center; justify-content: center;
@@ -960,7 +984,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
   margin-top: 20px; letter-spacing: .15em;
 }
 
-/* LANGUE SELECTOR */
+/* ── LANGUE SELECTOR ── */
 .lang-overlay {
   position:fixed; inset:0; z-index:200;
   background:rgba(5,8,14,0.97);
@@ -968,7 +992,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 }
 .lang-overlay.hidden { display:none; }
 
-/* DISCLAIMER */
+/* ── DISCLAIMER ── */
 .disclaimer-overlay {
   position:fixed; inset:0; z-index:99999;
   background:rgba(5,8,14,0.98);
@@ -1024,7 +1048,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .lang-flag { font-size:22px; }
 .lang-name { font-size:10px; font-weight:700; color:#E8F0FF; letter-spacing:.06em; }
 
-/* TUTO OVERLAY */
+/* ── TUTO OVERLAY ── */
 .tuto-overlay {
   position:fixed; inset:0; z-index:180;
   background:rgba(0,0,0,0); pointer-events:none;
@@ -1127,7 +1151,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .tuto-next:hover { background:linear-gradient(135deg,#7089f0,#6a7fe6); transform:translateY(-1px); }
 .tuto-next:active { transform:scale(.97); }
 
-/* DON OVERLAY */
+/* ── DON OVERLAY ── */
 .don-overlay {
   position:fixed; inset:0; z-index:190;
   background:rgba(5,8,14,0.95);
@@ -1161,7 +1185,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 }
 .don-btn-close:hover { border-color:#627EEA; color:#8899BB; }
 
-
+/* ── BOUTON DON dans header ── */
 .kofi-btn {
   width:32px; height:32px; border-radius:8px;
   background:#0D1420; border:1px solid #1A2840;
@@ -1172,7 +1196,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 }
 .kofi-btn:hover { border-color:#F7931A; }
 
-/* MUSIQUE */
+/* ── MUSIQUE ── */
 .music-bar {
   display:flex; align-items:center; gap:8px;
   padding:6px 12px; border-top:1px solid #111B2E;
@@ -1230,7 +1254,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 }
 
 
-/* PRESTIGE */
+/* ── PRESTIGE ── */
 .prestige-bar {
   display: flex; align-items: center; gap: 10px;
   padding: 7px 14px; border-bottom: 1px solid #111B2E;
@@ -1256,7 +1280,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .prest-ready .prest-fill  { background: linear-gradient(90deg, #EC4899, #F7931A); }
 @keyframes prestPulse { 0%,100%{opacity:1} 50%{opacity:.6} }
 
-/* PRESTIGE OVERLAY */
+/* ── PRESTIGE OVERLAY ── */
 .prest-overlay {
   position: fixed; inset: 0; z-index: 300;
   background: rgba(5,3,14,.95);
@@ -1288,7 +1312,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
   color: #445577; font-family: 'Space Mono', monospace; font-size: 9px; cursor: pointer;
 }
 
-/* NOTIFICATIONS DE PROGRESSION */
+/* ── NOTIFICATIONS DE PROGRESSION ── */
 .milestone-notif {
   position: fixed; bottom: 56px; left: 50%;
   transform: translateX(-50%) translateY(80px);
@@ -1341,7 +1365,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .lang-setting-btn.active { border-color: #F7931A; color: #F7931A; background: rgba(247,147,26,.08); }
 
 
-/* INDICATEUR SAUVEGARDE */
+/* ── INDICATEUR SAUVEGARDE ── */
 .save-indicator {
   position: fixed; bottom: 56px; right: 10px;
   font-family: 'Space Mono', monospace; font-size: 8px;
@@ -1355,7 +1379,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
 .save-indicator.show { opacity: 1; }
 
 
-
+/* ── ÉVÉNEMENTS ALÉATOIRES ── */
 .event-banner {
   position: fixed; top: 0; left: 0; right: 0; z-index: 150;
   padding: 10px 16px; display: flex; align-items: center; gap: 10px;
@@ -1376,7 +1400,7 @@ body::before { content:""; position:fixed; inset:0; background-image:linear-grad
   color: inherit; font-size: 12px; cursor: pointer; padding: 2px 7px;
 }
 
-
+/* ── THÈME JOUR / NUIT ── */
 body.theme-day {
   --bg-main:    #E8ECF4;
   --bg-card:    #F0F3FA;
@@ -1522,7 +1546,7 @@ body.theme-day #prest-fill { background: linear-gradient(90deg, #F7931A, #FFD700
 }
 .theme-indicator.show { opacity: 1; }
 
-/* GRAPHIQUES STATS */
+/* ── GRAPHIQUES STATS ── */
 .stats-chart-wrap { padding: 10px 0 4px; }
 .stats-chart-label { font-size: 7px; color: #445577; letter-spacing: .12em; margin-bottom: 5px; }
 .stats-canvas-wrap { position: relative; height: 80px; }
@@ -1536,7 +1560,7 @@ body.theme-day #prest-fill { background: linear-gradient(90deg, #F7931A, #FFD700
 .session-val   { font-size: 11px; font-weight: 700; font-family: 'Space Mono', monospace; }
 
 
-/* RIVAL MINER */
+/* ── RIVAL MINER ── */
 .rival-bar {
   display:flex; align-items:center; gap:8px;
   padding:6px 14px; border-bottom:1px solid #111B2E;
@@ -1575,7 +1599,7 @@ body.theme-day #prest-fill { background: linear-gradient(90deg, #F7931A, #FFD700
 .rival-alert-title { font-size:13px; font-weight:700; color:#FF4560; margin-bottom:4px; }
 .rival-alert-sub   { font-size:9px; color:#445577; font-family:'Space Mono',monospace; line-height:1.5; }
 
-/* ANIMATIONS DE CLIC */
+/* ── ANIMATIONS DE CLIC ── */
 .float-ring {
   position:fixed; border-radius:50%;
   border:2px solid var(--ring-color,#F7931A);
@@ -1609,7 +1633,7 @@ body.theme-day #prest-fill { background: linear-gradient(90deg, #F7931A, #FFD700
 }
 
 
-/* BATTLE RIVAL */
+/* ── BATTLE RIVAL ── */
 .battle-overlay {
   position: fixed; inset: 0; z-index: 250;
   background: rgba(5,3,14,.95);
@@ -1668,7 +1692,7 @@ body.theme-day #prest-fill { background: linear-gradient(90deg, #F7931A, #FFD700
 }
 
 
-/* BOUTON CLIC BATTLE */
+/* ── BOUTON CLIC BATTLE ── */
 .battle-click-btn {
   width: 110px; height: 110px; border-radius: 50%;
   background: radial-gradient(circle at 38% 35%, #1a2a4a, #080c14);
@@ -1703,7 +1727,7 @@ body.theme-day #prest-fill { background: linear-gradient(90deg, #F7931A, #FFD700
 @keyframes scan { from{top:0} to{top:100%} }
 
 
-/* ROUE DE VOL */
+/* ── ROUE DE VOL ── */
 .wheel-overlay {
   position: fixed; inset: 0; z-index: 6000;
   background: rgba(5,2,12,.97);
@@ -1766,7 +1790,7 @@ body.theme-day #prest-fill { background: linear-gradient(90deg, #F7931A, #FFD700
 
 
 
-
+/* ── GAME WRAPPER (hidden until JOUER clicked) ── */
 #game-wrapper {
   display: none;
   flex-direction: column;
@@ -2048,8 +2072,8 @@ body.theme-sakura .lang-pick-btn.active .lp-name { color: #FF69B4; }
     </div>
     <div class="opts-row">
       <span class="opts-label">QUALITÉ</span>
-      <select class="opts-select" onchange="setQuality(this.value)">
-        <option value="ultra">ULTRA</option><option value="haute">HAUTE</option><option value="normale" selected>NORMALE</option>
+      <select class="opts-select">
+        <option>ULTRA</option><option>HAUTE</option><option>NORMALE</option>
       </select>
     </div>
     <button class="opts-close" onclick="hideOptions()">◄ RETOUR</button>
@@ -2478,7 +2502,7 @@ async function playRapidScenes() {
     await wait(dur);
   }
 
-  // on cache l'overlay
+  // Fade out
   await tween(300,easeIn,e=>{sc.style.opacity=String(1-e);});
   sc.remove();
   flashW(.3,200);
@@ -3262,6 +3286,9 @@ showLangFirst();
     <div class="don-title" id="don-title">SOUTENIR LE JEU</div>
     <div class="don-text"  id="don-text" style="white-space:pre-line">CryptoMiner est 100% gratuit.
 Une donation encourage de nouveaux jeux !</div>
+    <a class="don-btn-kofi" href="https://ko-fi.com/felix1404" target="_blank">
+      ☕ KO-FI — felix1404
+    </a>
     <button class="don-btn-close" onclick="closeDon()" id="don-close-btn">Fermer</button>
   </div>
 </div>
@@ -3347,19 +3374,19 @@ un bonus permanent de +50% BTC/clic.
       <div class="rival-name" id="rival-name">SatoshiKiller99</div>
       <span class="rival-diff-badge" id="rival-diff-badge-inline" style="background:rgba(255,69,96,.12);color:#FF4560;border:1px solid #FF456044">—</span>
     </div>
-    <div class="rival-status" id="rival-status" style="display:none">Il mine en silence...</div>
+    <div class="rival-status" id="rival-status" style="display:none">Mining in silence...</div>
   </div>
   <div class="rival-vs-wrap" style="display:none">
     <div class="rival-vs-row">
-      <span class="rival-vs-label" style="color:#627EEA">TOI</span>
+      <span class="rival-vs-label" style="color:#627EEA" id="rival-lbl-you">TOI</span>
       <div class="rival-vs-bar"><div class="rival-vs-you"  id="rival-bar-you"  style="width:50%"></div></div>
     </div>
     <div class="rival-vs-row">
-      <span class="rival-vs-label" style="color:#FF4560">LUI</span>
+      <span class="rival-vs-label" style="color:#FF4560" id="rival-lbl-them">LUI</span>
       <div class="rival-vs-bar"><div class="rival-vs-them" id="rival-bar-them" style="width:50%"></div></div>
     </div>
   </div>
-  <button class="rival-sabotage-btn" id="rival-sabotage-btn" onclick="sabotageRival()">⚡ SABOTER</button>
+  <button class="rival-sabotage-btn" id="rival-sabotage-btn" onclick="sabotageRival()">⚡ SABOTAGE</button>
 </div>
 
 <!-- Mini-objectifs -->
@@ -3376,6 +3403,7 @@ un bonus permanent de +50% BTC/clic.
   <button class="tab active" id="tab-upg"    onclick="switchTab('upg')">⚡ AMÉLIOS</button>
   <button class="tab"        id="tab-auto"   onclick="switchTab('auto')">🤖 BOTS</button>
   <button class="tab"        id="tab-market" onclick="switchTab('market')">📈 MARCHÉ</button>
+  <button class="tab"        id="tab-chart"  onclick="switchTab('chart')">📊 CHART</button>
   <button class="tab"        id="tab-stats"  onclick="switchTab('stats')">📊 STATS</button>
   <button class="tab"        id="tab-ach"    onclick="switchTab('ach')">🏆 TROPHÉES</button>
   <button class="tab"        id="tab-skins"  onclick="switchTab('skins')">🎨 SKINS</button>
@@ -3441,6 +3469,67 @@ un bonus permanent de +50% BTC/clic.
   </div>
 </div>
 
+<!-- PANEL CHART -->
+<div class="panel hidden" id="panel-chart">
+  <div class="section-title"><span id="chart-panel-title">📊 BTC BALANCE — HISTORIQUE</span></div>
+
+  <!-- Sélecteur de période -->
+  <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap">
+    <button class="chart-range-btn active" id="crb-5m"  onclick="setChartRange('5m')">5 min</button>
+    <button class="chart-range-btn"        id="crb-15m" onclick="setChartRange('15m')">15 min</button>
+    <button class="chart-range-btn"        id="crb-30m" onclick="setChartRange('30m')">30 min</button>
+    <button class="chart-range-btn"        id="crb-1h"  onclick="setChartRange('1h')">1 h</button>
+    <button class="chart-range-btn"        id="crb-all" onclick="setChartRange('all')">Tout</button>
+  </div>
+
+  <!-- Graphique principal courbe BTC -->
+  <div style="position:relative;width:100%;height:160px;background:rgba(13,20,32,.6);border:1px solid #111B2E;border-radius:8px;overflow:hidden;margin-bottom:10px">
+    <canvas id="btc-history-canvas" style="width:100%;height:100%"></canvas>
+    <div id="btc-chart-tooltip" style="position:absolute;top:6px;right:8px;font-size:8px;font-family:'Space Mono',monospace;color:#F7931A;pointer-events:none;text-align:right;line-height:1.6"></div>
+  </div>
+
+  <!-- Stats live -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+    <div style="background:rgba(13,20,32,.6);border:1px solid #111B2E;border-radius:8px;padding:8px 10px">
+      <div style="font-size:7px;color:#445577;letter-spacing:.1em;margin-bottom:3px" id="chart-stat-lbl-total">₿ TOTAL MINÉ</div>
+      <div style="font-size:14px;font-weight:700;color:#F7931A;font-family:'Space Mono',monospace" id="chart-stat-total">0</div>
+    </div>
+    <div style="background:rgba(13,20,32,.6);border:1px solid #111B2E;border-radius:8px;padding:8px 10px">
+      <div style="font-size:7px;color:#445577;letter-spacing:.1em;margin-bottom:3px" id="chart-stat-lbl-rate">⚡ TAUX / MIN</div>
+      <div style="font-size:14px;font-weight:700;color:#00D97E;font-family:'Space Mono',monospace" id="chart-stat-rate">0</div>
+    </div>
+    <div style="background:rgba(13,20,32,.6);border:1px solid #111B2E;border-radius:8px;padding:8px 10px">
+      <div style="font-size:7px;color:#445577;letter-spacing:.1em;margin-bottom:3px" id="chart-stat-lbl-click">👆 BTC / CLIC</div>
+      <div style="font-size:14px;font-weight:700;color:#627EEA;font-family:'Space Mono',monospace" id="chart-stat-click">0</div>
+    </div>
+    <div style="background:rgba(13,20,32,.6);border:1px solid #111B2E;border-radius:8px;padding:8px 10px">
+      <div style="font-size:7px;color:#445577;letter-spacing:.1em;margin-bottom:3px" id="chart-stat-lbl-bot">🤖 BTC / SEC (BOTS)</div>
+      <div style="font-size:14px;font-weight:700;color:#A78BFA;font-family:'Space Mono',monospace" id="chart-stat-bot">0</div>
+    </div>
+  </div>
+
+  <!-- Graphique bots vs clics (barres) -->
+  <div style="background:rgba(13,20,32,.6);border:1px solid #111B2E;border-radius:8px;padding:10px;margin-bottom:8px">
+    <div style="font-size:7px;color:#445577;letter-spacing:.12em;margin-bottom:8px" id="chart-breakdown-title">RÉPARTITION DES REVENUS</div>
+    <div style="display:flex;flex-direction:column;gap:5px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:8px;color:#627EEA;width:60px;flex-shrink:0" id="chart-lbl-clicks">👆 Clics</span>
+        <div style="flex:1;height:8px;background:#111B2E;border-radius:4px;overflow:hidden">
+          <div id="chart-bar-clicks" style="height:100%;background:linear-gradient(90deg,#627EEA,#A78BFA);border-radius:4px;transition:width .5s ease;width:0%"></div>
+        </div>
+        <span style="font-size:8px;color:#627EEA;width:50px;text-align:right;font-family:'Space Mono',monospace" id="chart-pct-clicks">0%</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:8px;color:#A78BFA;width:60px;flex-shrink:0" id="chart-lbl-bots">🤖 Bots</span>
+        <div style="flex:1;height:8px;background:#111B2E;border-radius:4px;overflow:hidden">
+          <div id="chart-bar-bots" style="height:100%;background:linear-gradient(90deg,#A78BFA,#F7931A);border-radius:4px;transition:width .5s ease;width:0%"></div>
+        </div>
+        <span style="font-size:8px;color:#A78BFA;width:50px;text-align:right;font-family:'Space Mono',monospace" id="chart-pct-bots">0%</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- PANEL STATS -->
 <div class="panel hidden" id="panel-stats">
   <div class="section-title"><span id="stat-title">📊 STATISTIQUES</span></div>
@@ -3449,15 +3538,17 @@ un bonus permanent de +50% BTC/clic.
     <div id="renaissance-leaderboard" style="display:flex;flex-direction:column;gap:3px"></div>
   </div>
 
-  <!-- Graphique progression BTC -->
+  <!-- Graphique en chandeliers BTC -->
   <div class="stats-chart-wrap">
-    <div class="stats-chart-label" id="chart-label-btc">PROGRESSION BTC (SESSION)</div>
-    <div class="stats-canvas-wrap">
-      <canvas id="chart-btc"></canvas>
+    <div class="stats-chart-label" id="chart-label-btc">📊 BTC BALANCE — LIVE CHART</div>
+    <div class="stats-canvas-wrap" style="height:120px;position:relative">
+      <canvas id="chart-btc" style="width:100%;height:120px"></canvas>
+      <div id="chart-hover-tooltip" style="position:absolute;top:4px;right:4px;background:rgba(6,12,20,.9);border:1px solid #F7931A44;border-radius:4px;padding:4px 8px;font-size:8px;font-family:'Space Mono',monospace;color:#F7931A;pointer-events:none;display:none"></div>
     </div>
     <div class="chart-legend">
-      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#F7931A"></div><span>BTC/min</span></div>
-      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#627EEA"></div><span>Clics/min</span></div>
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#00D97E"></div><span id="chart-leg-bull">Hausse</span></div>
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#FF4560"></div><span id="chart-leg-bear">Baisse</span></div>
+      <div class="chart-legend-item"><div class="chart-legend-dot" style="background:#627EEA"></div><span id="chart-leg-wick">Wick</span></div>
     </div>
   </div>
 
@@ -3536,16 +3627,6 @@ un bonus permanent de +50% BTC/clic.
           <div class="t-dot"></div>
           <span class="t-icon">🌙</span>
           <span class="t-name" id="tname-night">NUIT</span>
-        </div>
-        <div class="theme-pick-card" id="tcard-day" onclick="selectTheme('day')">
-          <div class="t-dot"></div>
-          <span class="t-icon">☀️</span>
-          <span class="t-name" id="tname-day">JOUR</span>
-        </div>
-        <div class="theme-pick-card" id="tcard-sakura" onclick="selectTheme('sakura')">
-          <div class="t-dot"></div>
-          <span class="t-icon">🌸</span>
-          <span class="t-name" id="tname-sakura">SAKURA</span>
         </div>
       </div>
 
@@ -3635,7 +3716,7 @@ let renaissanceTimes=[]; // historique des temps
 let unlocked=new Set(), currentSkin=0;
 const skinsBought=new Set([0]);
 let autoPerSec=0, autoInterval=null;
-const autoLevels=new Array(30).fill(0);
+const autoLevels=new Array(10).fill(0);
 const upgLevels=new Array(50).fill(0);
 const opts={sound:true,anim:true,vibro:true};
 
@@ -3644,108 +3725,79 @@ const opts={sound:true,anim:true,vibro:true};
 // 50 améliorations clic — progression géométrique cohérente
 const UPGRADES = [
   // Tier 1 — départ
-  {i:0,  icon:'⛏', name:'Pioche en bois',     desc:'+2 BTC/clic',       cost:20,        bonus:2,    max:999},
-  {i:1,  icon:'⛏', name:'Pioche en pierre',   desc:'+3 BTC/clic',       cost:198,        bonus:3,    max:999},
-  {i:2,  icon:'⛏', name:'Pioche en fer',      desc:'+5 BTC/clic',       cost:540,       bonus:5,    max:999},
-  {i:3,  icon:'⛏', name:'Pioche en or',       desc:'+8 BTC/clic',       cost:1199,       bonus:8,    max:999 },
-  {i:4,  icon:'⛏', name:'Pioche en diamant',  desc:'+12 BTC/clic',       cost:2394,      bonus:12,    max:999 },
+  {i:0,  icon:'⛏', name:'Pioche en bois',     desc:'+1 BTC/clic',       cost:15,        bonus:1,    max:10},
+  {i:1,  icon:'⛏', name:'Pioche en pierre',   desc:'+2 BTC/clic',       cost:75,        bonus:2,    max:10},
+  {i:2,  icon:'⛏', name:'Pioche en fer',      desc:'+3 BTC/clic',       cost:225,       bonus:3,    max:10},
+  {i:3,  icon:'⛏', name:'Pioche en or',       desc:'+5 BTC/clic',       cost:750,       bonus:5,    max:8 },
+  {i:4,  icon:'⛏', name:'Pioche en diamant',  desc:'+8 BTC/clic',       cost:2250,      bonus:8,    max:8 },
   // Tier 2 — électronique
-  {i:5,  icon:'💻', name:'Vieux PC',           desc:'+18 BTC/clic',      cost:4402,      bonus:18,   max:999 },
-  {i:6,  icon:'💻', name:'PC Gaming',          desc:'+28 BTC/clic',      cost:7644,     bonus:28,   max:999 },
-  {i:7,  icon:'🖥', name:'Workstation',        desc:'+44 BTC/clic',      cost:13013,     bonus:44,   max:999 },
-  {i:8,  icon:'🖥', name:'GPU RX 580',         desc:'+68 BTC/clic',      cost:21901,     bonus:68,   max:999 },
-  {i:9,  icon:'🖥', name:'GPU RTX 3060',       desc:'+106 BTC/clic',      cost:36477,    bonus:106,   max:999 },
+  {i:5,  icon:'💻', name:'Vieux PC',           desc:'+12 BTC/clic',      cost:6000,      bonus:12,   max:8 },
+  {i:6,  icon:'💻', name:'PC Gaming',          desc:'+18 BTC/clic',      cost:15000,     bonus:18,   max:6 },
+  {i:7,  icon:'🖥', name:'Workstation',        desc:'+25 BTC/clic',      cost:37500,     bonus:25,   max:6 },
+  {i:8,  icon:'🖥', name:'GPU RX 580',         desc:'+40 BTC/clic',      cost:90000,     bonus:40,   max:6 },
+  {i:9,  icon:'🖥', name:'GPU RTX 3060',       desc:'+60 BTC/clic',      cost:225000,    bonus:60,   max:5 },
   // Tier 3 — réseau
-  {i:10, icon:'🔌', name:'Câble Ethernet',     desc:'+166 BTC/clic',      cost:60180,    bonus:166,   max:999 },
-  {i:11, icon:'📡', name:'Fibre optique',      desc:'+257 BTC/clic',     cost:99115,   bonus:257,  max:999 },
-  {i:12, icon:'🛰', name:'Satellite',          desc:'+400 BTC/clic',     cost:162268,       bonus:400,  max:999 },
-  {i:13, icon:'📶', name:'5G privé',           desc:'+623 BTC/clic',     cost:263848,     bonus:623,  max:999 },
-  {i:14, icon:'🔮', name:'Réseau quantique',   desc:'+969 BTC/clic',     cost:428286,      bonus:969,  max:999 },
+  {i:10, icon:'🔌', name:'Câble Ethernet',     desc:'+80 BTC/clic',      cost:525000,    bonus:80,   max:5 },
+  {i:11, icon:'📡', name:'Fibre optique',      desc:'+110 BTC/clic',     cost:1200000,   bonus:110,  max:5 },
+  {i:12, icon:'🛰', name:'Satellite',          desc:'+150 BTC/clic',     cost:3e6,       bonus:150,  max:5 },
+  {i:13, icon:'📶', name:'5G privé',           desc:'+200 BTC/clic',     cost:7.5e6,     bonus:200,  max:4 },
+  {i:14, icon:'🔮', name:'Réseau quantique',   desc:'+280 BTC/clic',     cost:18e6,      bonus:280,  max:4 },
   // Tier 4 — hardware avancé
-  {i:15, icon:'⚙', name:'ASIC S9',            desc:'+1k BTC/clic',     cost:691050,      bonus:1506,  max:999 },
-  {i:16, icon:'⚙', name:'ASIC S19',           desc:'+2k BTC/clic',     cost:1.12e6,      bonus:2343,  max:999 },
-  {i:17, icon:'⚙', name:'ASIC S19 Pro',       desc:'+3k BTC/clic',     cost:1.8e6,     bonus:3644,  max:999 },
-  {i:18, icon:'🏭', name:'Farm 10 rigs',       desc:'+5k BTC/clic',   cost:2.89e6,     bonus:5667, max:999 },
-  {i:19, icon:'🏭', name:'Farm 100 rigs',      desc:'+8k BTC/clic',   cost:4.62e6,    bonus:8813, max:999 },
+  {i:15, icon:'⚙', name:'ASIC S9',            desc:'+380 BTC/clic',     cost:42e6,      bonus:380,  max:4 },
+  {i:16, icon:'⚙', name:'ASIC S19',           desc:'+500 BTC/clic',     cost:90e6,      bonus:500,  max:4 },
+  {i:17, icon:'⚙', name:'ASIC S19 Pro',       desc:'+700 BTC/clic',     cost:195e6,     bonus:700,  max:3 },
+  {i:18, icon:'🏭', name:'Farm 10 rigs',       desc:'+1 000 BTC/clic',   cost:450e6,     bonus:1000, max:3 },
+  {i:19, icon:'🏭', name:'Farm 100 rigs',      desc:'+2 000 BTC/clic',   cost:1.05e9,    bonus:2000, max:3 },
   // Tier 5 — industrie
-  {i:20, icon:'🏗', name:'Datacenter S',       desc:'+13k BTC/clic',   cost:7.4e6,    bonus:13706, max:999 },
-  {i:21, icon:'🏗', name:'Datacenter M',       desc:'+21k BTC/clic',   cost:11.8e6,       bonus:21317, max:999 },
-  {i:22, icon:'🏗', name:'Datacenter XL',      desc:'+33k BTC/clic',   cost:18.9e6,      bonus:33152, max:999 },
-  {i:23, icon:'💧', name:'Hydro Mining',       desc:'+51k BTC/clic',     cost:30.1e6,    bonus:51559,max:999 },
-  {i:24, icon:'☀', name:'Solar Farm',         desc:'+80k BTC/clic',     cost:47.9e6,      bonus:80187,max:999 },
+  {i:20, icon:'🏗', name:'Datacenter S',       desc:'+3 000 BTC/clic',   cost:2.25e9,    bonus:3000, max:3 },
+  {i:21, icon:'🏗', name:'Datacenter M',       desc:'+5 000 BTC/clic',   cost:6e9,       bonus:5000, max:3 },
+  {i:22, icon:'🏗', name:'Datacenter XL',      desc:'+8 000 BTC/clic',   cost:15e9,      bonus:8000, max:3 },
+  {i:23, icon:'💧', name:'Hydro Mining',       desc:'+12k BTC/clic',     cost:37.5e9,    bonus:12000,max:3 },
+  {i:24, icon:'☀', name:'Solar Farm',         desc:'+18k BTC/clic',     cost:90e9,      bonus:18000,max:2 },
   // Tier 6 — énergie
-  {i:25, icon:'💨', name:'Éolienne',           desc:'+124k BTC/clic',     cost:76.4e6,     bonus:124709,max:999 },
-  {i:26, icon:'☢', name:'Réacteur nucl.',     desc:'+193k BTC/clic',     cost:122e6,     bonus:193951,max:999 },
-  {i:27, icon:'🌋', name:'Géothermie',         desc:'+301k BTC/clic',     cost:193e6,    bonus:301638,max:999 },
-  {i:28, icon:'⚡', name:'Fusion nucléaire',   desc:'+469k BTC/clic',    cost:307e6,    bonus:469117,max:999},
-  {i:29, icon:'🌊', name:'Énergie des marées', desc:'+729k BTC/clic',    cost:486e6,     bonus:729585,max:999},
+  {i:25, icon:'💨', name:'Éolienne',           desc:'+25k BTC/clic',     cost:225e9,     bonus:25000,max:2 },
+  {i:26, icon:'☢', name:'Réacteur nucl.',     desc:'+40k BTC/clic',     cost:600e9,     bonus:40000,max:2 },
+  {i:27, icon:'🌋', name:'Géothermie',         desc:'+60k BTC/clic',     cost:1.5e12,    bonus:60000,max:2 },
+  {i:28, icon:'⚡', name:'Fusion nucléaire',   desc:'+100k BTC/clic',    cost:4.5e12,    bonus:100000,max:2},
+  {i:29, icon:'🌊', name:'Énergie des marées', desc:'+160k BTC/clic',    cost:12e12,     bonus:160000,max:2},
   // Tier 7 — spatial
-  {i:30, icon:'🚀', name:'Station spatiale',   desc:'+1.1M BTC/clic',    cost:770e6,     bonus:1134673,max:999},
-  {i:31, icon:'🌙', name:'Base lunaire',       desc:'+1.8M BTC/clic',    cost:1.22e9,     bonus:1764678,max:999},
-  {i:32, icon:'🪐', name:'Terraforming Mars',  desc:'+2.7M BTC/clic',    cost:1.93e9,    bonus:2744481,max:999},
-  {i:33, icon:'☄', name:'Astéroïde minier',   desc:'+4.3M BTC/clic',      cost:3.06e9,    bonus:4268300,  max:999 },
-  {i:34, icon:'🌌', name:'Station Jovienne',   desc:'+6.6M BTC/clic',    cost:4.84e9,   bonus:6638189,max:999 },
+  {i:30, icon:'🚀', name:'Station spatiale',   desc:'+250k BTC/clic',    cost:30e12,     bonus:250000,max:2},
+  {i:31, icon:'🌙', name:'Base lunaire',       desc:'+400k BTC/clic',    cost:75e12,     bonus:400000,max:2},
+  {i:32, icon:'🪐', name:'Terraforming Mars',  desc:'+650k BTC/clic',    cost:195e12,    bonus:650000,max:2},
+  {i:33, icon:'☄', name:'Astéroïde minier',   desc:'+1M BTC/clic',      cost:525e12,    bonus:1e6,  max:2 },
+  {i:34, icon:'🌌', name:'Station Jovienne',   desc:'+1.6M BTC/clic',    cost:1.35e15,   bonus:1.6e6,max:2 },
   // Tier 8 — cosmique
-  {i:35, icon:'⭐', name:'Étoile à neutrons',  desc:'+10.3M BTC/clic',    cost:7.66e9,   bonus:10323912,max:999 },
-  {i:36, icon:'🌀', name:'Pulsar',             desc:'+16.1M BTC/clic',      cost:12.1e9,   bonus:16056060,  max:999 },
-  {i:37, icon:'🌑', name:'Trou noir mineur',   desc:'+25.0M BTC/clic',      cost:19.1e9,     bonus:24970870,  max:999 },
-  {i:38, icon:'☀', name:'Dyson Sphere',       desc:'+38.8M BTC/clic',     cost:30.2e9,     bonus:38835452, max:999 },
-  {i:39, icon:'🌌', name:'Cluster galactique', desc:'+60.4M BTC/clic',     cost:47.6e9,    bonus:60398070, max:999 },
+  {i:35, icon:'⭐', name:'Étoile à neutrons',  desc:'+2.5M BTC/clic',    cost:3.75e15,   bonus:2.5e6,max:1 },
+  {i:36, icon:'🌀', name:'Pulsar',             desc:'+4M BTC/clic',      cost:10.5e15,   bonus:4e6,  max:1 },
+  {i:37, icon:'🌑', name:'Trou noir mineur',   desc:'+7M BTC/clic',      cost:30e15,     bonus:7e6,  max:1 },
+  {i:38, icon:'☀', name:'Dyson Sphere',       desc:'+12M BTC/clic',     cost:90e15,     bonus:12e6, max:1 },
+  {i:39, icon:'🌌', name:'Cluster galactique', desc:'+20M BTC/clic',     cost:300e15,    bonus:20e6, max:1 },
   // Tier 9 — divin
-  {i:40, icon:'🔮', name:'Matière noire',      desc:'+93.9M BTC/clic',     cost:75.1e9,    bonus:93932906, max:999 },
-  {i:41, icon:'✨', name:'Énergie sombre',     desc:'+146.1M BTC/clic',     cost:119e9,      bonus:146087296, max:999 },
-  {i:42, icon:'🌀', name:'Singularité',        desc:'+227.2M BTC/clic',    cost:187e9,   bonus:227199382,max:999 },
-  {i:43, icon:'⚛', name:'Quantum Rig',        desc:'+353.3M BTC/clic',    cost:295e9,   bonus:353347351,max:999 },
-  {i:44, icon:'🔱', name:'Multivers',          desc:'+549.5M BTC/clic',    cost:464e9,    bonus:549536488,max:999 },
+  {i:40, icon:'🔮', name:'Matière noire',      desc:'+35M BTC/clic',     cost:900e15,    bonus:35e6, max:1 },
+  {i:41, icon:'✨', name:'Énergie sombre',     desc:'+60M BTC/clic',     cost:3e18,      bonus:60e6, max:1 },
+  {i:42, icon:'🌀', name:'Singularité',        desc:'+100M BTC/clic',    cost:10.5e18,   bonus:100e6,max:1 },
+  {i:43, icon:'⚛', name:'Quantum Rig',        desc:'+200M BTC/clic',    cost:37.5e18,   bonus:200e6,max:1 },
+  {i:44, icon:'🔱', name:'Multivers',          desc:'+400M BTC/clic',    cost:150e18,    bonus:400e6,max:1 },
   // Tier 10 — légendaire
-  {i:45, icon:'💫', name:'Big Bang local',     desc:'+854.7M BTC/clic',    cost:733e9,    bonus:854655768,max:999 },
-  {i:46, icon:'🌟', name:'Étoile primordiale', desc:'+1.3G BTC/clic',    cost:1.15e12,   bonus:1329186502,max:999 },
-  {i:47, icon:'👁', name:'Conscience cosmique',desc:'+2.1G BTC/clic',    cost:1.82e12,      bonus:2067191051,max:999 },
-  {i:48, icon:'♾', name:'Infini',             desc:'+3.2G BTC/clic',      cost:2.86e12,   bonus:3214958049,  max:999 },
-  {i:49, icon:'₿', name:'SATOSHI MODE',       desc:'+5.0G BTC/clic',     cost:4.5e12,    bonus:5000000000, max:999 },
+  {i:45, icon:'💫', name:'Big Bang local',     desc:'+700M BTC/clic',    cost:600e18,    bonus:700e6,max:1 },
+  {i:46, icon:'🌟', name:'Étoile primordiale', desc:'+1.2G BTC/clic',    cost:2.25e21,   bonus:1.2e9,max:1 },
+  {i:47, icon:'👁', name:'Conscience cosmique',desc:'+2.5G BTC/clic',    cost:9e21,      bonus:2.5e9,max:1 },
+  {i:48, icon:'♾', name:'Infini',             desc:'+5G BTC/clic',      cost:37.5e21,   bonus:5e9,  max:1 },
+  {i:49, icon:'₿', name:'SATOSHI MODE',       desc:'+10G BTC/clic',     cost:150e21,    bonus:10e9, max:1 },
 ];
 
-// 10 bots auto — même progression cohérente
+// 10 bots auto — donnent des BTC/sec fixes, indépendants du btcPerClick du joueur
 const AUTO_UPGRADES = [
-  // Tier 1 — départ
-  {i:0,  icon:'🤖', name:'Bot basique',       desc:'5 clics/sec',    cost:300,                      speed:5,       max:999},
-  {i:1,  icon:'⚙',  name:'Bot rapide',        desc:'10 clics/sec',      cost:2000,                     speed:10,       max:999},
-  {i:2,  icon:'🔧', name:'Turbo bot',         desc:'200 clics/sec',     cost:10000,                    speed:20,       max:999},
-  {i:3,  icon:'💡', name:'Smart bot',         desc:'40 clics/sec',     cost:50000,                    speed:40,       max:999},
-  // Tier 2 — IA
-  {i:4,  icon:'🧠', name:'IA Mineure',        desc:'80 clics/sec',     cost:200000,                   speed:80,       max:999},
-  {i:5,  icon:'🤯', name:'IA Avancée',        desc:'200 clics/sec',    cost:800000,                   speed:200,        max:999},
-  {i:6,  icon:'🦾', name:'Cyborg Miner',      desc:'4 500 clics/sec',    cost:3500000,                  speed:450,        max:999},
-  {i:7,  icon:'🌐', name:'Cloud Mining',      desc:'11 000 clics/sec',   cost:15000000,                 speed:1100,       max:999},
-  {i:8,  icon:'🚀', name:'IA Quantique',      desc:'2 200 clics/sec',   cost:65000000,                 speed:2200,       max:999},
-  {i:9,  icon:'🛸', name:'IA Cosmique',       desc:'4 500 clics/sec',   cost:350000000,                speed:4500,       max:999},
-  // Tier 3 — tech avancée
-  {i:10, icon:'🧬', name:'Bot Neuronal',      desc:'7 000 clics/sec',   cost:1500000000,               speed:7000,       max:999},
-  {i:11, icon:'🔬', name:'Nano Miner',        desc:'11 000 clics/sec', cost:7000000000,               speed:11000,      max:999},
-  {i:12, icon:'💠', name:'Cristal IA',        desc:'17 000 clics/sec', cost:35000000000,              speed:17000,      max:999},
-  // Tier 4 — espace
-  {i:13, icon:'🛸', name:'Drone Stellaire',   desc:'26 000 clics/sec', cost:150000000000,             speed:26000,      max:999},
-  {i:14, icon:'🌌', name:'Harvester Galact.', desc:'40 000 clics/sec', cost:700000000000,             speed:40000,      max:999},
-  {i:15, icon:'🪐', name:'Anneaux Saturne',   desc:'60 000 clics/sec', cost:3500000000000,            speed:60000,      max:999},
-  // Tier 5 — mythologie
-  {i:16, icon:'⚡', name:'Éclair de Zeus',    desc:'90 000 clics/sec', cost:18000000000000,           speed:90000,      max:999},
-  {i:17, icon:'🔱', name:'Trident Poséidon',  desc:'135 000 clics/sec',cost:90000000000000,           speed:135000,     max:999},
-  {i:18, icon:'🌙', name:'Œil de Ra',         desc:'200 000 clics/sec',cost:450000000000000,          speed:200000,     max:999},
-  {i:19, icon:'🐉', name:'Dragon Cosmique',   desc:'300 000 clics/sec',cost:2500000000000000,         speed:300000,     max:999},
-  // Tier 6 — divin
-  {i:20, icon:'🌀', name:'Vortex Éternel',    desc:'450 000 clics/sec',cost:15000000000000000,        speed:450000,     max:999},
-  {i:21, icon:'👁',  name:'Œil Omniscient',   desc:'650 000 clics/sec',cost:80000000000000000,        speed:650000,     max:999},
-  {i:22, icon:'🔮', name:'Cristal Divin',     desc:'950 000 clics/sec',cost:500000000000000000,       speed:950000,     max:999},
-  // Tier 7 — cosmique extrême
-  {i:23, icon:'💫', name:'Supernova Bot',     desc:'1.4M clics/sec',  cost:3000000000000000000,      speed:1400000,    max:999},
-  {i:24, icon:'🌠', name:'Étoile Filante',    desc:'20M clics/sec',  cost:20000000000000000000,     speed:2000000,    max:999},
-  // Tier 8 — légendaire
-  {i:25, icon:'☯',  name:'Équilibre Univ.',   desc:'3M clics/sec',  cost:150000000000000000000,    speed:3000000,    max:999},
-  {i:26, icon:'🧿', name:'Œil du Destin',     desc:'4.5M clics/sec',  cost:1200000000000000000000,   speed:4500000,    max:999},
-  {i:27, icon:'🌐', name:'Réseau Infini',     desc:'6.5M clics/sec',  cost:10000000000000000000000,  speed:6500000,    max:999},
-  // Tier 9 — ultime
-  {i:28, icon:'🕳',  name:'Trou Noir Mineur', desc:'10M clics/sec',    cost:100000000000000000000000, speed:10000000,   max:999},
-  {i:29, icon:'♾',  name:'DIEU DU MINAGE',   desc:'20M clics/sec',    cost:1e24,                     speed:20000000,   max:999},
+  {i:0, icon:'🤖', name:'Bot basique',     desc:'0.7 BTC/sec',   cost:75,       speed:0.7,  max:1},
+  {i:1, icon:'⚙',  name:'Bot rapide',     desc:'1.3 BTC/sec',   cost:450,      speed:1.3,  max:1},
+  {i:2, icon:'🔧', name:'Turbo bot',      desc:'3.3 BTC/sec',   cost:1800,     speed:3.3,  max:1},
+  {i:3, icon:'💡', name:'Smart bot',      desc:'6.7 BTC/sec',   cost:7500,     speed:6.7,  max:1},
+  {i:4, icon:'🧠', name:'IA Mineure',     desc:'13 BTC/sec',    cost:30000,    speed:13,   max:1},
+  {i:5, icon:'🤯', name:'IA Avancée',     desc:'33 BTC/sec',    cost:120000,   speed:33,   max:1},
+  {i:6, icon:'🦾', name:'Cyborg Miner',   desc:'67 BTC/sec',    cost:450000,   speed:67,   max:1},
+  {i:7, icon:'🌐', name:'Cloud Mining',   desc:'167 BTC/sec',   cost:1800000,  speed:167,  max:1},
+  {i:8, icon:'🚀', name:'IA Quantique',   desc:'333 BTC/sec',   cost:7500000,  speed:333,  max:1},
+  {i:9, icon:'🛸', name:'IA Cosmique',    desc:'667 BTC/sec',   cost:37500000, speed:667,  max:1},
 ];
 
 
@@ -3755,16 +3807,16 @@ const AUTO_UPGRADES = [
 // Les bonus sont PERMANENTS et survivent aux resets
 
 const SHOP_REWARDS = [
-  { palier:1,  icon:'🔥', name:'Forge de Renaissance',    desc:'Commence chaque Renaissance avec +10 BTC/clic bonus permanent',      type:'click',  bonus:100   },
-  { palier:2,  icon:'🤖', name:'Bot Hérité',               desc:'Commence avec le Bot basique déjà débloqué après chaque reset',      type:'bot',    bonus:10    },
-  { palier:3,  icon:'⚡', name:'Condensateur Energie',     desc:'+25% BTC/clic en bonus permanent sur ta production de base',         type:'mult',   bonus:2.5 },
-  { palier:4,  icon:'🛡', name:'Bouclier Anti-Rival',      desc:'Le rival te vole 25% de moins lors de la roue',                     type:'rival',  bonus:2.5 },
-  { palier:5,  icon:'💾', name:'Memoire du Marche',        desc:'+30% de gains sur tous les paris du marche',                        type:'market', bonus:3 },
-  { palier:6,  icon:'🌟', name:'Aura de Satoshi',          desc:'Chaque clic rapporte +5% de BTC en bonus supplémentaire',           type:'aura',   bonus:0.5 },
-  { palier:7,  icon:'🏦', name:'Coffre-fort Quantique',    desc:'Conserve 10% de tes BTC lors de chaque Renaissance',                type:'vault',  bonus:1 },
-  { palier:8,  icon:'🚀', name:'Turbo Bot Heritage',       desc:'Commence aussi avec le Turbo bot deja débloqué apres chaque reset', type:'bot2',   bonus:10    },
-  { palier:9,  icon:'♾', name:'Echo Infini',              desc:'+2 BTC/sec auto permanent qui survit aux Renaissances',             type:'auto',   bonus:20    },
-  { palier:10, icon:'👑', name:'SATOSHI LEGACY',           desc:'x2 sur tout — BTC/clic, auto, marche. Le pouvoir ultime.',          type:'ultimate',bonus:20   },
+  { palier:1,  icon:'🔥', name:'Forge de Renaissance',    desc:'Commence chaque Renaissance avec +10 BTC/clic bonus permanent',      type:'click',  bonus:10   },
+  { palier:2,  icon:'🤖', name:'Bot Hérité',               desc:'Commence avec le Bot basique déjà débloqué après chaque reset',      type:'bot',    bonus:1    },
+  { palier:3,  icon:'⚡', name:'Condensateur Energie',     desc:'+25% BTC/clic en bonus permanent sur ta production de base',         type:'mult',   bonus:0.25 },
+  { palier:4,  icon:'🛡', name:'Bouclier Anti-Rival',      desc:'Le rival te vole 25% de moins lors de la roue',                     type:'rival',  bonus:0.25 },
+  { palier:5,  icon:'💾', name:'Memoire du Marche',        desc:'+30% de gains sur tous les paris du marche',                        type:'market', bonus:0.30 },
+  { palier:6,  icon:'🌟', name:'Aura de Satoshi',          desc:'Chaque clic rapporte +5% de BTC en bonus supplémentaire',           type:'aura',   bonus:0.05 },
+  { palier:7,  icon:'🏦', name:'Coffre-fort Quantique',    desc:'Conserve 10% de tes BTC lors de chaque Renaissance',                type:'vault',  bonus:0.10 },
+  { palier:8,  icon:'🚀', name:'Turbo Bot Heritage',       desc:'Commence aussi avec le Turbo bot deja débloqué apres chaque reset', type:'bot2',   bonus:1    },
+  { palier:9,  icon:'♾', name:'Echo Infini',              desc:'+2 BTC/sec auto permanent qui survit aux Renaissances',             type:'auto',   bonus:2    },
+  { palier:10, icon:'👑', name:'SATOSHI LEGACY',           desc:'x2 sur tout — BTC/clic, auto, marche. Le pouvoir ultime.',          type:'ultimate',bonus:2   },
 ];
 
 // shopLevels[i] = 1 si récompense i débloquée, 0 sinon
@@ -4082,17 +4134,19 @@ function fmtN(n) {
 
 // ═══ BARRE PROCHAIN TROPHÉE ═══
 function updateNextAch() {
-  // Trouver le premier trophée non débloqué
+  const _La = LANGS[currentLang] || LANGS.fr;
   const next = ACHIEVEMENTS.find(a => !unlocked.has(a.id));
   if (!next) {
-    // Tous débloqués
-    document.getElementById('nab-name').textContent = '✓ Tous débloqués !';
+    const allDoneTexts = { fr:'✓ Tous débloqués !', en:'✓ All unlocked!', es:'✓ ¡Todos desbloqueados!', ar:'✓ كل شيء مفتوح!', pt:'✓ Todos desbloqueados!' };
+    document.getElementById('nab-name').textContent = allDoneTexts[currentLang] || allDoneTexts.en;
     document.getElementById('nab-pct').textContent = '100%';
     document.getElementById('nab-fill').style.width = '100%';
     document.getElementById('nab-fill').style.background = '#00D97E';
     return;
   }
-  document.getElementById('nab-name').textContent = next.icon + ' ' + next.name;
+  const nextIdx = ACHIEVEMENTS.indexOf(next);
+  const nextName = (_La.achNames && _La.achNames[nextIdx]) || next.name;
+  document.getElementById('nab-name').textContent = next.icon + ' ' + nextName;
 
   // Calculer le pourcentage selon le type de trophée
   let pct = 0;
@@ -4123,7 +4177,7 @@ function updateNextAch() {
   else if (id==='u10')   pct = Math.min(100, (upgLevels.reduce((a,b)=>a+b,0)/10)*100);
   else if (id==='a1')    pct = autoLevels.some(l=>l>0) ? 100 : 0;
   else if (id==='a5')    pct = Math.min(100, (autoLevels.filter(l=>l>0).length/5)*100);
-  else if (id==='a10')   pct = Math.min(100, (autoLevels.filter(l=>l>0).length/30)*100);
+  else if (id==='a10')   pct = Math.min(100, (autoLevels.filter(l=>l>0).length/10)*100);
   else pct = unlocked.has(next.id) ? 100 : 0;
 
   document.getElementById('nab-pct').textContent = Math.floor(pct) + '%';
@@ -4135,18 +4189,20 @@ function updateNextAch() {
 
 // ═══ DISPLAY ═══
 function updateDisplay() {
+  const _L = LANGS[currentLang] || LANGS.fr;
   document.getElementById('btc-display').innerHTML = fmt(btc);
-  document.getElementById('per-click-label').textContent = '+'+fmtN(btcPerClick)+' par clic';
+  document.getElementById('per-click-label').textContent = _L.perClick(fmtN(btcPerClick));
   const al = document.getElementById('auto-label');
-  if(autoPerSec>0){ al.style.display=''; al.textContent='⚙ +'+fmtN(autoPerSec)+' BTC/s auto'; }
+  if(autoPerSec>0){ al.style.display=''; al.textContent = _L.autoLabel(fmtN(autoPerSec)); }
   else al.style.display='none';
   refreshUpgrades(); refreshAutoList(); updateExamples(); updateStats(); checkAchievements(); updateNextAch(); updatePrestigeBar(); checkMilestones(); updateSessionStats();
 }
 
 // ═══ ONGLETS ═══
-const TABS=['upg','auto','market','stats','ach','skins','shop'];
+const TABS=['upg','auto','market','chart','stats','ach','skins','shop'];
 function switchTab(name){
   if (name === 'shop') buildShopList();
+  if (name === 'chart') { setTimeout(drawBtcHistoryChart, 50); updateChartPanel(); }
   TABS.forEach(t=>{
     const tb=document.getElementById('tab-'+t);
     const pb=document.getElementById('panel-'+t);
@@ -4173,20 +4229,16 @@ function refreshUpgrades(){
   UPGRADES.forEach(u=>{
     const el=document.getElementById('upg-'+u.i), ce=document.getElementById('uc-'+u.i), le=document.getElementById('ul-'+u.i);
     if(!el||!ce||!le) return;
-    const lv=upgLevels[u.i], cost=upgCost(u,lv);
-    le.textContent='Niv. '+lv;
-    const can=btc>=cost;
-    el.className='upg-item'+(can?' can-buy':'');
-    ce.textContent=fmtN(cost)+' BTC';
-    ce.className='upg-cost'+(can?' affordable':'');
+    const lv=upgLevels[u.i], cost=Math.floor(u.cost*Math.pow(2.2,lv));
+    le.textContent=lv+' / '+u.max;
+    if(lv>=u.max){el.className='upg-item maxed';ce.textContent='MAX ✓';ce.className='upg-cost';}
+    else{const can=btc>=cost;el.className='upg-item'+(can?' can-buy':'');ce.textContent=fmtN(cost)+' BTC';ce.className='upg-cost'+(can?' affordable':'');}
   });
 }
-function upgCost(u, lv) {
-  return Math.floor(u.cost * Math.pow(1.8, lv));
-}
 function buyUpg(i){
-  const u=UPGRADES[i], lv=upgLevels[i];
-  const cost=upgCost(u, lv);
+  const u=UPGRADES[i],lv=upgLevels[i];
+  if(lv>=u.max) return;
+  const cost=Math.floor(u.cost*Math.pow(2.2,lv));
   if(btc<cost) return;
   btc-=cost; upgLevels[i]++; btcPerClick+=Math.round(u.bonus * prestigeMult);
   const L=LANGS[currentLang]||LANGS.fr;
@@ -4213,41 +4265,33 @@ function refreshAutoList(){
     const el=document.getElementById('auto-'+u.i), ce=document.getElementById('ac-'+u.i), le=document.getElementById('al-'+u.i);
     if(!el||!ce||!le) return;
     const lv=autoLevels[u.i];
-    const cost=autoCost(u,lv);
-    le.textContent='Niv. '+lv;
-    const can=btc>=cost;
-    el.className='upg-item'+(can?' can-buy':'');
-    ce.textContent=fmtN(cost)+' BTC';
-    ce.className='upg-cost'+(can?' affordable':'');
+    le.textContent=lv+' / '+u.max;
+    if(lv>=u.max){el.className='upg-item maxed';ce.textContent='✓ '+(LANGS[currentLang]?.botActive||'Active');ce.className='upg-cost';}
+    else{const can=btc>=u.cost;el.className='upg-item'+(can?' can-buy':'');ce.textContent=fmtN(u.cost)+' BTC';ce.className='upg-cost'+(can?' affordable':'');}
   });
-}
-function autoCost(u, lv) {
-  return Math.floor(u.cost * Math.pow(1.9, lv));
 }
 function buyAuto(i){
   const u=AUTO_UPGRADES[i];
-  const lv=autoLevels[i];
-  const cost=autoCost(u, lv);
-  if(btc<cost) return;
-  btc-=cost; autoLevels[i]++; autoPerSec+=u.speed;
+  if(autoLevels[i]>=u.max) return;
+  if(btc<u.cost) return;
+  btc-=u.cost; autoLevels[i]++; autoPerSec+=u.speed;
   const Lb=LANGS[currentLang]||LANGS.fr;
   const bname=(Lb.botNames&&Lb.botNames[i])||u.name;
   if(!autoInterval) startAutoTick();
-  showToast(u.icon+' '+bname+' — +'+fmtN(u.speed)+' '+(LANGS[currentLang]?.toastAutoSec||'BTC/sec!')); scheduleSave();
+  showToast(u.icon+' '+bname+' — +'+u.speed+' '+(LANGS[currentLang]?.toastAutoSec||'BTC/sec!')); scheduleSave();
   updateDisplay();
 }
 function startAutoTick(){
   autoInterval=setInterval(()=>{
     if(autoPerSec<=0) return;
-    // production fixe — indépendante du btcPerClick
     const _aMult=(Date.now()<eventEndTime?eventMult:1);
-    const g=autoPerSec*_aMult;
-    btc+=g; totalMined+=g;
+    // Bots give their own FIXED BTC/sec — completely independent of btcPerClick
+    const g = autoPerSec * _aMult;
+    btc+=g/20; totalMined+=g/20;
+    lifetimeMined+=g/20;
+    _botIncome5s += g/20; // track for chart
     updateDisplay();
-    const btn=document.getElementById('mine-btn');
-    btn.style.boxShadow='0 0 18px var(--btn-shadow,rgba(247,147,26,.4))';
-    setTimeout(()=>btn.style.boxShadow='',100);
-  },1000);
+  },50); // 50ms tick = 20 ticks/sec for smooth auto income
 }
 
 // ═══ MARCHÉ ═══
@@ -4258,7 +4302,7 @@ function updateExamples(){
   const mise=getMise();
   [{k:'facile',m:1.5},{k:'normal',m:2},{k:'difficile',m:3},{k:'impossible',m:10}].forEach(({k,m})=>{
     const el=document.getElementById('ex-'+k);
-    el.textContent=mise>0?'→ +'+fmtN(Math.floor(mise*m))+' BTC':'Entrez une mise';
+    el.textContent=mise>0?'→ +'+fmtN(Math.floor(mise*m))+' BTC':(LANGS[currentLang]?.enterBet||'Enter a bet');
   });
 }
 let betting=false;
@@ -4310,13 +4354,13 @@ function play(diff){
       if(diff==='impossible') unlocked.add('_imp');
       res.className='market-result win';
       document.getElementById('result-icon').textContent='🎉';
-      document.getElementById('result-text').textContent='+'+fmtN(gain)+' BTC — GAGNÉ !';
+      document.getElementById('result-text').textContent='+'+fmtN(gain)+' BTC — '+(LANGS[currentLang]?.marketWon||'WON!');
       showToast((LANGS[currentLang]?.toastWin||'🎉 WON +{n} BTC!').replace('{n}',fmtN(gain)));
     }else{
       btc=Math.max(0,btc-mise); mLosses++; mLostBtc+=mise;
       res.className='market-result lose';
       document.getElementById('result-icon').textContent='💸';
-      document.getElementById('result-text').textContent='-'+fmtN(mise)+' BTC — PERDU';
+      document.getElementById('result-text').textContent='-'+fmtN(mise)+' BTC — '+(LANGS[currentLang]?.marketLost||'LOST');
       showToast((LANGS[currentLang]?.toastLoss||'💸 Lost -{n} BTC').replace('{n}',fmtN(mise)));
     }
     updateDisplay(); betting=false;
@@ -4327,7 +4371,7 @@ function play(diff){
 // ═══ STATS ═══
 function updateStats(){
   document.getElementById('s-total').textContent  = fmtN(totalMined);
-  document.getElementById('s-clics').textContent  = totalClics.toLocaleString('fr');
+  document.getElementById('s-clics').textContent  = totalClics.toLocaleString(currentLang === 'ar' ? 'ar' : currentLang === 'pt' ? 'pt' : 'en');
   document.getElementById('s-vpc').textContent    = fmtN(btcPerClick);
   document.getElementById('s-auto').textContent   = autoPerSec+'/sec';
   document.getElementById('s-wins').textContent   = mWins;
@@ -4376,7 +4420,7 @@ function buildSkins(){
   const list=document.getElementById('skin-list');
   SKINS.forEach(s=>{
     const el=document.createElement('div'); el.className='skin-card'+(s.id===currentSkin?' active':''); el.id='skin-'+s.id;
-    el.innerHTML=`<div class="skin-preview" style="background:${s.bg};border:2px solid ${s.border}">${s.icon}</div><div class="skin-info"><div class="skin-name">${s.name}</div><div class="skin-sub">${s.sub}</div><div class="skin-price ${skinsBought.has(s.id)?'owned':''}" id="sp-${s.id}">${skinsBought.has(s.id)?(s.id===currentSkin?'✓ Équipé':'✓ Possédé'):fmtN(s.cost)+' BTC'}</div></div>`;
+    el.innerHTML=`<div class="skin-preview" style="background:${s.bg};border:2px solid ${s.border}">${s.icon}</div><div class="skin-info"><div class="skin-name">${s.name}</div><div class="skin-sub">${s.sub}</div><div class="skin-price ${skinsBought.has(s.id)?'owned':''}" id="sp-${s.id}">${skinsBought.has(s.id)?(s.id===currentSkin?'✓ '+(LANGS[currentLang]?.skinEquipped||'Equipped'):'✓ '+(LANGS[currentLang]?.skinOwned||'Owned')):fmtN(s.cost)+' BTC'}</div></div>`;
     el.addEventListener('click',()=>buySkin(s.id));
     list.appendChild(el);
   });
@@ -4435,7 +4479,7 @@ function buySkin(id){
     if(sk.prestige !== undefined && !own){
       sp.textContent='🔒 Renaissance '+sk.prestige;
     } else {
-      sp.textContent=own?(sk.id===currentSkin?'✓ Équipé':'✓ Possédé'):fmtN(sk.cost)+' BTC';
+      sp.textContent=own?(sk.id===currentSkin?'✓ '+(LANGS[currentLang]?.skinEquipped||'Equipped'):'✓ '+(LANGS[currentLang]?.skinOwned||'Owned')):fmtN(sk.cost)+' BTC';
     }
     sp.className='skin-price'+(own?' owned':'');
   });
@@ -4554,6 +4598,7 @@ function showToast(msg){
 document.getElementById('mine-btn').addEventListener('pointerdown',function(e){
   e.preventDefault();
   const _cMult = (Date.now()<eventEndTime?eventMult:1); btc+=btcPerClick*_cMult; totalMined+=btcPerClick*_cMult; totalClics++; if(totalClics%100===0) scheduleSave();
+  _clickIncome5s += btcPerClick * _cMult; // track for chart
   updateDisplay(); spawnFloat(e);
 
   // Animation inline — indépendante, fonctionne toujours
@@ -4591,10 +4636,17 @@ const LANGS = {
   fr: {
     btcLabel:   '₿ BITCOIN MINÉ',
     mineLabel:  'MINER',
+    botActive: 'Actif',
     perClick:   v => `+${v} par clic`,
     autoLabel:  v => `+${v} BTC/s auto`,
     tabUpg: '⚡ AMÉLIOS', tabBots: '🤖 BOTS', tabMarket: '📈 MARCHÉ',
-    tabStats: '📊 STATS', tabAch: '🏆 TROPHÉES', tabSkins: '🎨 SKINS', tabShop: '♾️ BOUTIQUE',
+    tabChart: '📊 CHART', tabStats: '📊 STATS', tabAch: '🏆 TROPHÉES', tabSkins: '🎨 SKINS', tabShop: '♾️ BOUTIQUE',
+    chartPanelTitle: '📊 SOLDE BTC — HISTORIQUE',
+    chartAll: 'Tout',
+    chartStatTotal: '₿ TOTAL MINÉ', chartStatRate: '⚡ TAUX / MIN',
+    chartStatClick: '👆 BTC / CLIC', chartStatBot: '🤖 BTC / SEC (BOTS)',
+    chartBreakdown: 'RÉPARTITION DES REVENUS',
+    chartLblClicks: '👆 Clics', chartLblBots: '🤖 Bots',
     secClickLabel: '⚡ AMÉLIORATIONS — CLIC',
     secBotLabel:   '🤖 AUTO-CLICKERS',
     miseLabel: 'MISE', maxBtn: 'MAX',
@@ -4602,6 +4654,7 @@ const LANGS = {
     enterBet: 'Entrez une mise',
     chanceLabel: n => `${n}% de chance`,
     gainLabel: '✅ Gain', loseLabel: '❌ Perd la mise',
+    marketWon: 'GAGNÉ !', marketLost: 'PERDU',
     statTitle: '📊 STATISTIQUES',
     sTotalMine: '₿ TOTAL MINÉ', sClics: '🖱 CLICS MANUELS',
     sBtcClic: '⚡ BTC / CLIC', sAutoClic: '🤖 CLICS AUTO/SEC',
@@ -4637,6 +4690,7 @@ const LANGS = {
     notifAuto:  'BTC/sec auto', notifWins: 'paris gagnés',
     nextAchLabel: '🏆 PROCHAIN TROPHÉE',
     rivalAhead: '⚠️ Il te dépasse !', rivalBehind: '✅ Tu le domines',
+    rivalSilent: 'Il mine en silence...',
     rivalStole: 'IL TE VOLE !', rivalStoleMsg: 'Il a pris 2% de tes BTC !',
     rivalSabotage: '⚡ SABOTER', rivalSabotaged: 'SABOTAGE !',
     rivalAttacks: '{n} ATTAQUE !',
@@ -4651,6 +4705,7 @@ const LANGS = {
     battleReward: 'Récompense : x{n} de tes BTC',
     battleHint: 'CLIQUE LE PLUS VITE POSSIBLE !',
     battleFlee: '🏳️ Fuir',
+    battleYou: 'TOI', battleThem: 'LUI',
     battleWon: '🏆 VICTOIRE !', battleWonMsg: '+{n} BTC gagnés ! (x{r})',
     battleLost: '💀 DÉFAITE...', battleLostMsg: '-{n} BTC perdus...',
     wheelTitle: '😈 LE RIVAL T\'A VOLÉ !',
@@ -4662,6 +4717,13 @@ const LANGS = {
     wheelLostUpg: 'Il a volé ton amélioration :',
     wheelLostBot: 'Il a volé ton bot :',
     wheelNothing: 'Il n\'a rien trouvé !',
+    chartLabel: '📊 SOLDE BTC — GRAPHIQUE EN DIRECT',
+    chartBull: 'Hausse', chartBear: 'Baisse', chartWick: 'Mèche',
+    sessLabelTime: '⏱ TEMPS SESSION', sessLabelRate: '⚡ BTC/MIN ACTUEL', sessLabelEvents: '🎲 ÉVÉNEMENTS',
+    statTitle2: '📈 TOTAUX', renaLeaderTitle: '♾ CLASSEMENT RENAISSANCES',
+    shopSectionLabel: '♾️ BOUTIQUE RENAISSANCE',
+    shopSectionDesc: '🎁 Atteins un palier de Renaissances pour débloquer une récompense permanente.<br>Les bonus survivent à chaque reset — ils s\'accumulent pour toujours.',
+    skinEquipped: 'Équipé', skinOwned: 'Possédé',
     tutoSkip: '✕ Passer',
     tutoSteps: [
       {icon:'₿', title:'Bienvenue !', body:"Clique sur le bouton ₿ pour miner\ndu Bitcoin virtuel.\n\nC'est gratuit, c'est un jeu !", tip:"💡 Ce jeu est 100% fictif — aucun vrai BTC n'est gagné."},
@@ -4673,6 +4735,12 @@ const LANGS = {
       {icon:'💰', title:'Soutenir le projet', body:"Ce jeu est gratuit !\nSi tu apprécies, une donation\naide à créer de nouveaux jeux.", tip:'☕ Bouton 💰 en haut à droite → Ko-fi'},
       {icon:'🎮', title:"C'est parti !", body:"Tu sais tout ce qu'il faut.\nMine, améliore, parie et collectionne.\n\nBonne chance !", tip:null},
     ],
+    objectives: {
+      obj_c50:'50 clics', obj_c200:'200 clics',
+      obj_m500:'Miner 500 BTC', obj_m5k:'Miner 5 000 BTC', obj_m50k:'Miner 50 000 BTC',
+      obj_w1:'Gagner 1 pari', obj_w3:'Gagner 3 paris',
+      obj_b1:'Acheter 1 bot', obj_upg3:'Acheter 3 amélios',
+    },
   },
 
   en: {
@@ -4681,7 +4749,13 @@ const LANGS = {
     perClick:   v => `+${v} per click`,
     autoLabel:  v => `+${v} BTC/s auto`,
     tabUpg: '⚡ UPGRADES', tabBots: '🤖 BOTS', tabMarket: '📈 MARKET',
-    tabStats: '📊 STATS', tabAch: '🏆 TROPHIES', tabSkins: '🎨 SKINS', tabShop: '♾️ SHOP',
+    tabChart: '📊 CHART', tabStats: '📊 STATS', tabAch: '🏆 TROPHIES', tabSkins: '🎨 SKINS', tabShop: '♾️ SHOP',
+    chartPanelTitle: '📊 BTC BALANCE — HISTORY',
+    chartAll: 'All',
+    chartStatTotal: '₿ TOTAL MINED', chartStatRate: '⚡ RATE / MIN',
+    chartStatClick: '👆 BTC / CLICK', chartStatBot: '🤖 BTC / SEC (BOTS)',
+    chartBreakdown: 'INCOME BREAKDOWN',
+    chartLblClicks: '👆 Clicks', chartLblBots: '🤖 Bots',
     secClickLabel: '⚡ CLICK UPGRADES',
     secBotLabel:   '🤖 AUTO-CLICKERS',
     miseLabel: 'BET', maxBtn: 'MAX',
@@ -4689,6 +4763,7 @@ const LANGS = {
     enterBet: 'Enter a bet',
     chanceLabel: n => `${n}% chance`,
     gainLabel: '✅ Win', loseLabel: '❌ Lose bet',
+    marketWon: 'WON!', marketLost: 'LOST',
     statTitle: '📊 STATISTICS',
     sTotalMine: '₿ TOTAL MINED', sClics: '🖱 MANUAL CLICKS',
     sBtcClic: '⚡ BTC / CLICK', sAutoClic: '🤖 AUTO CLICKS/SEC',
@@ -4724,6 +4799,7 @@ const LANGS = {
     notifAuto:  'BTC/sec auto', notifWins: 'bets won',
     nextAchLabel: '🏆 NEXT TROPHY',
     rivalAhead: '⚠️ He\'s overtaking!', rivalBehind: '✅ You dominate him',
+    rivalSilent: 'Mining in silence...',
     rivalStole: 'HE STEALS!', rivalStoleMsg: 'He took 2% of your BTC!',
     rivalSabotage: '⚡ SABOTAGE', rivalSabotaged: 'SABOTAGE!',
     rivalAttacks: '{n} ATTACKS!',
@@ -4738,6 +4814,7 @@ const LANGS = {
     battleReward: 'Reward: x{n} of your BTC',
     battleHint: 'TAP AS FAST AS POSSIBLE!',
     battleFlee: '🏳️ Flee',
+    battleYou: 'YOU', battleThem: 'THEM',
     battleWon: '🏆 VICTORY!', battleWonMsg: '+{n} BTC earned! (x{r})',
     battleLost: '💀 DEFEAT...', battleLostMsg: '-{n} BTC lost...',
     wheelTitle: '😈 THE RIVAL ROBBED YOU!',
@@ -4749,6 +4826,13 @@ const LANGS = {
     wheelLostUpg: 'He stole your upgrade:',
     wheelLostBot: 'He stole your bot:',
     wheelNothing: 'He found nothing!',
+    chartLabel: '📊 BTC BALANCE — LIVE CHART',
+    chartBull: 'Bullish', chartBear: 'Bearish', chartWick: 'Wick',
+    sessLabelTime: '⏱ SESSION TIME', sessLabelRate: '⚡ CURRENT BTC/MIN', sessLabelEvents: '🎲 EVENTS',
+    statTitle2: '📈 TOTALS', renaLeaderTitle: '♾ RENAISSANCE LEADERBOARD',
+    shopSectionLabel: '♾️ RENAISSANCE SHOP',
+    shopSectionDesc: '🎁 Reach a Renaissance milestone to unlock a permanent reward.<br>Bonuses survive every reset — they accumulate forever.',
+    skinEquipped: 'Equipped', skinOwned: 'Owned',
     tutoSkip: '✕ Skip',
     tutoSteps: [
       {icon:'₿', title:'Welcome!', body:"Click the ₿ button to mine\nvirtual Bitcoin.\n\nFree to play, it's a game!", tip:"💡 This game is 100% fictional — no real BTC is earned."},
@@ -4760,10 +4844,17 @@ const LANGS = {
       {icon:'💰', title:'Support', body:"This game is free!\nA donation helps create\nnew games and projects.", tip:'☕ 💰 button top right → Ko-fi'},
       {icon:'🎮', title:"Let's go!", body:"You know everything.\nMine, upgrade, bet and collect.\n\nGood luck!", tip:null},
     ],
+    objectives: {
+      obj_c50:'50 clicks', obj_c200:'200 clicks',
+      obj_m500:'Mine 500 BTC', obj_m5k:'Mine 5,000 BTC', obj_m50k:'Mine 50,000 BTC',
+      obj_w1:'Win 1 bet', obj_w3:'Win 3 bets',
+      obj_b1:'Buy 1 bot', obj_upg3:'Buy 3 upgrades',
+    },
     upgNames: ['Wood Pickaxe','Stone Pickaxe','Iron Pickaxe','Gold Pickaxe','Diamond Pickaxe','Old PC','Gaming PC','Workstation','GPU RX 580','GPU RTX 3060','Ethernet Cable','Fiber Optic','Satellite','Private 5G','Quantum Network','ASIC S9','ASIC S19','ASIC S19 Pro','Farm 10 rigs','Farm 100 rigs','Datacenter S','Datacenter M','Datacenter XL','Hydro Mining','Solar Farm','Wind Turbine','Nuclear Reactor','Geothermal','Nuclear Fusion','Tidal Energy','Space Station','Lunar Base','Mars Terraforming','Asteroid Mining','Jovian Station','Neutron Star','Pulsar','Minor Black Hole','Dyson Sphere','Galactic Cluster','Dark Matter','Dark Energy','Singularity','Quantum Rig','Multiverse','Local Big Bang','Primordial Star','Cosmic Consciousness','Infinity','SATOSHI MODE'],
     upgDescs: ['+1 BTC/click','+2 BTC/click','+3 BTC/click','+5 BTC/click','+8 BTC/click','+12 BTC/click','+18 BTC/click','+25 BTC/click','+40 BTC/click','+60 BTC/click','+80 BTC/click','+110 BTC/click','+150 BTC/click','+200 BTC/click','+280 BTC/click','+380 BTC/click','+500 BTC/click','+700 BTC/click','+1k BTC/click','+2k BTC/click','+3k BTC/click','+5k BTC/click','+8k BTC/click','+12k BTC/click','+18k BTC/click','+25k BTC/click','+40k BTC/click','+60k BTC/click','+100k BTC/click','+160k BTC/click','+250k BTC/click','+400k BTC/click','+650k BTC/click','+1M BTC/click','+1.6M BTC/click','+2.5M BTC/click','+4M BTC/click','+7M BTC/click','+12M BTC/click','+20M BTC/click','+35M BTC/click','+60M BTC/click','+100M BTC/click','+200M BTC/click','+400M BTC/click','+700M BTC/click','+1.2B BTC/click','+2.5B BTC/click','+5B BTC/click','+10B BTC/click'],
-    botNames: ['Basic Bot','Fast Bot','Turbo Bot','Smart Bot','Minor AI','Advanced AI','Cyborg Miner','Cloud Mining','Quantum AI','Cosmic AI','Neural Bot','Nano Miner','Crystal AI','Stellar Drone','Galactic Harvester','Saturn Rings','Zeus Lightning','Poseidon Trident','Eye of Ra','Cosmic Dragon','Eternal Vortex','Omniscient Eye','Divine Crystal','Supernova Bot','Shooting Star','Universal Balance','Eye of Fate','Infinite Network','Minor Black Hole','GOD OF MINING'],
-    botDescs: ['0.5 click/sec','1 click/sec','2 clicks/sec','4 clicks/sec','8 clicks/sec','20 clicks/sec','45 clicks/sec','110 clicks/sec','220 clicks/sec','450 clicks/sec','700 clicks/sec','1,100 clicks/sec','1,700 clicks/sec','2,600 clicks/sec','4,000 clicks/sec','6,000 clicks/sec','9,000 clicks/sec','13,500 clicks/sec','20,000 clicks/sec','30,000 clicks/sec','45,000 clicks/sec','65,000 clicks/sec','95,000 clicks/sec','140k clicks/sec','200k clicks/sec','300k clicks/sec','450k clicks/sec','650k clicks/sec','1M clicks/sec','2M clicks/sec'],
+    botNames: ['Basic Bot','Fast Bot','Turbo Bot','Smart Bot','Minor AI','Advanced AI','Cyborg Miner','Cloud Mining','Quantum AI','Cosmic AI'],
+    botDescs: ['0.7 BTC/sec','1.3 BTC/sec','3.3 BTC/sec','6.7 BTC/sec','13 BTC/sec','33 BTC/sec','67 BTC/sec','167 BTC/sec','333 BTC/sec','667 BTC/sec'],
+    botActive: 'Active',
     achNames: ['First Click','Regular','Click Maniac','Unleashed','Marathoner','Click Machine','Centurion','Thousands','Millionaire','Whale','To the Moon','Cosmic','First Tool','Equipped','Collector','First Bot','Bot Army','Cosmic AI','Lucky Strike','Lucky Streak','Casino King','The Impossible','Learn from Mistakes','Stylish','Rainbow','Full Collection','Richer Than You','Bankruptcy','Speeder','GOD MODE','First Awakening','Cycle of 3','Halfway','SATOSHI REBORN','Lightning Rebirth','Reborn Collector'],
     achConds: ['Click 1 time','10 clicks','100 clicks','500 clicks','1,000 clicks','10,000 clicks','100 BTC mined','1,000 BTC mined','10,000 BTC mined','100,000 BTC mined','1,000,000 BTC mined','1 Billion BTC mined','Buy 1 upgrade','Buy 10 upgrades','All upgrades','Buy 1 auto bot','Have 5 active bots','All bots bought','Win 1 bet','Win 10 bets','Win 50 bets','Win on Impossible','Lose 10 bets','Buy 1 skin','Buy 5 skins','All skins','Have 1M BTC in wallet','Have 0 BTC','500 auto clicks/sec','Buy SATOSHI MODE','1 Renaissance','3 Renaissances','5 Renaissances','10 Renaissances — Legendary','Renaissance in under 20 min','Unlock 5 shop rewards'],
     shopNames: ['Renaissance Forge','Inherited Bot','Energy Capacitor','Anti-Rival Shield','Market Memory','Satoshi Aura','Quantum Vault','Turbo Bot Heritage','Echo Infinity','SATOSHI LEGACY'],
@@ -4805,10 +4896,17 @@ const LANGS = {
   es: {
     btcLabel:   '₿ BITCOIN MINADO',
     mineLabel:  'MINAR',
+    botActive: 'Activo',
     perClick:   v => `+${v} por clic`,
     autoLabel:  v => `+${v} BTC/s auto`,
     tabUpg: '⚡ MEJORAS', tabBots: '🤖 BOTS', tabMarket: '📈 MERCADO',
-    tabStats: '📊 STATS', tabAch: '🏆 TROFEOS', tabSkins: '🎨 SKINS', tabShop: '♾️ TIENDA',
+    tabChart: '📊 CHART', tabStats: '📊 STATS', tabAch: '🏆 TROFEOS', tabSkins: '🎨 SKINS', tabShop: '♾️ TIENDA',
+    chartPanelTitle: '📊 SALDO BTC — HISTORIAL',
+    chartAll: 'Todo',
+    chartStatTotal: '₿ TOTAL MINADO', chartStatRate: '⚡ TASA / MIN',
+    chartStatClick: '👆 BTC / CLIC', chartStatBot: '🤖 BTC / SEG (BOTS)',
+    chartBreakdown: 'DESGLOSE DE INGRESOS',
+    chartLblClicks: '👆 Clics', chartLblBots: '🤖 Bots',
     secClickLabel: '⚡ MEJORAS DE CLIC',
     secBotLabel:   '🤖 AUTO-CLICKERS',
     miseLabel: 'APUESTA', maxBtn: 'MÁX',
@@ -4816,6 +4914,7 @@ const LANGS = {
     enterBet: 'Ingresa una apuesta',
     chanceLabel: n => `${n}% probabilidad`,
     gainLabel: '✅ Ganancia', loseLabel: '❌ Pierde la apuesta',
+    marketWon: '¡GANADO!', marketLost: 'PERDIDO',
     statTitle: '📊 ESTADÍSTICAS',
     sTotalMine: '₿ TOTAL MINADO', sClics: '🖱 CLICS MANUALES',
     sBtcClic: '⚡ BTC / CLIC', sAutoClic: '🤖 AUTO CLICS/SEG',
@@ -4851,6 +4950,7 @@ const LANGS = {
     notifAuto:  'BTC/seg auto', notifWins: 'apuestas ganadas',
     nextAchLabel: '🏆 PRÓXIMO TROFEO',
     rivalAhead: '⚠️ ¡Te está superando!', rivalBehind: '✅ Lo dominas',
+    rivalSilent: 'Minando en silencio...',
     rivalStole: '¡TE ROBA!', rivalStoleMsg: '¡Tomó el 2% de tus BTC!',
     rivalSabotage: '⚡ SABOTEAR', rivalSabotaged: '¡SABOTAJE!',
     rivalAttacks: '¡{n} ATACA!',
@@ -4865,6 +4965,7 @@ const LANGS = {
     battleReward: 'Recompensa: x{n} de tus BTC',
     battleHint: '¡HAZ CLIC LO MÁS RÁPIDO POSIBLE!',
     battleFlee: '🏳️ Huir',
+    battleYou: 'TÚ', battleThem: 'ÉL',
     battleWon: '🏆 ¡VICTORIA!', battleWonMsg: '+{n} BTC ganados! (x{r})',
     battleLost: '💀 DERROTA...', battleLostMsg: '-{n} BTC perdidos...',
     wheelTitle: '😈 ¡EL RIVAL TE ROBÓ!',
@@ -4876,6 +4977,13 @@ const LANGS = {
     wheelLostUpg: 'Robó tu mejora:',
     wheelLostBot: 'Robó tu bot:',
     wheelNothing: '¡No encontró nada!',
+    chartLabel: '📊 BALANCE BTC — GRÁFICO EN VIVO',
+    chartBull: 'Alcista', chartBear: 'Bajista', chartWick: 'Mecha',
+    sessLabelTime: '⏱ TIEMPO SESIÓN', sessLabelRate: '⚡ BTC/MIN ACTUAL', sessLabelEvents: '🎲 EVENTOS',
+    statTitle2: '📈 TOTALES', renaLeaderTitle: '♾ CLASIFICACIÓN RENAISSANCES',
+    shopSectionLabel: '♾️ TIENDA RENAISSANCE',
+    shopSectionDesc: '🎁 Alcanza un hito de Renaissances para desbloquear una recompensa permanente.<br>Los bonos sobreviven a cada reset — se acumulan para siempre.',
+    skinEquipped: 'Equipado', skinOwned: 'Poseído',
     tutoSkip: '✕ Saltar',
     tutoSteps: [
       {icon:'₿', title:'¡Bienvenido!', body:"Haz clic en el botón ₿\npara minar Bitcoin virtual.\n\n¡Es gratis, es un juego!", tip:'💡 Este juego es 100% ficticio — no se gana BTC real.'},
@@ -4887,15 +4995,28 @@ const LANGS = {
       {icon:'💰', title:'Apoyar', body:"¡Este juego es gratis!\nUna donación ayuda a crear\nnuevos juegos y proyectos.", tip:'☕ Botón 💰 arriba → Ko-fi'},
       {icon:'🎮', title:'¡Vamos!', body:"Ya sabes todo lo necesario.\nMina, mejora, apuesta y colecciona.\n\n¡Buena suerte!", tip:null},
     ],
+    objectives: {
+      obj_c50:'50 clics', obj_c200:'200 clics',
+      obj_m500:'Minar 500 BTC', obj_m5k:'Minar 5.000 BTC', obj_m50k:'Minar 50.000 BTC',
+      obj_w1:'Ganar 1 apuesta', obj_w3:'Ganar 3 apuestas',
+      obj_b1:'Comprar 1 bot', obj_upg3:'Comprar 3 mejoras',
+    },
   },
 
   ar: {
     btcLabel:   '₿ بيتكوين مُعدَّن',
     mineLabel:  'تعدين',
+    botActive: 'نشط',
     perClick:   v => `+${v} لكل نقرة`,
     autoLabel:  v => `+${v} BTC/ث تلقائي`,
     tabUpg: '⚡ تحسينات', tabBots: '🤖 بوتات', tabMarket: '📈 السوق',
-    tabStats: '📊 إحصاء', tabAch: '🏆 جوائز', tabSkins: '🎨 مظاهر', tabShop: '♾️ متجر',
+    tabChart: '📊 مخطط', tabStats: '📊 إحصاء', tabAch: '🏆 جوائز', tabSkins: '🎨 مظاهر', tabShop: '♾️ متجر',
+    chartPanelTitle: '📊 رصيد BTC — السجل',
+    chartAll: 'الكل',
+    chartStatTotal: '₿ إجمالي التعدين', chartStatRate: '⚡ المعدل / دقيقة',
+    chartStatClick: '👆 BTC / نقرة', chartStatBot: '🤖 BTC / ثانية (بوتات)',
+    chartBreakdown: 'توزيع الدخل',
+    chartLblClicks: '👆 نقرات', chartLblBots: '🤖 بوتات',
     secClickLabel: '⚡ تحسينات النقر',
     secBotLabel:   '🤖 نقر تلقائي',
     miseLabel: 'الرهان', maxBtn: 'أقصى',
@@ -4903,6 +5024,7 @@ const LANGS = {
     enterBet: 'أدخل رهانك',
     chanceLabel: n => `${n}% فرصة`,
     gainLabel: '✅ ربح', loseLabel: '❌ خسارة الرهان',
+    marketWon: 'فزت!', marketLost: 'خسرت',
     statTitle: '📊 إحصائيات',
     sTotalMine: '₿ إجمالي التعدين', sClics: '🖱 نقرات يدوية',
     sBtcClic: '⚡ BTC / نقرة', sAutoClic: '🤖 نقرات تلقائية/ث',
@@ -4937,6 +5059,7 @@ const LANGS = {
     notifAuto:  'BTC/ث تلقائي', notifWins: 'رهانات مربوحة',
     nextAchLabel: '🏆 الجائزة التالية',
     rivalAhead: '⚠️ إنه يتجاوزك!', rivalBehind: '✅ أنت تتفوق عليه',
+    rivalSilent: 'يعدّن في صمت...',
     rivalStole: 'سرق منك!', rivalStoleMsg: 'أخذ 2% من BTC!',
     rivalSabotage: '⚡ تخريب', rivalSabotaged: 'تخريب!',
     rivalAttacks: '{n} يهجم!',
@@ -4951,6 +5074,7 @@ const LANGS = {
     battleReward: 'المكافأة: x{n} من BTC',
     battleHint: 'انقر بأسرع ما يمكن!',
     battleFlee: '🏳️ فرار',
+    battleYou: 'أنت', battleThem: 'هو',
     battleWon: '🏆 انتصار!', battleWonMsg: '+{n} BTC مكتسبة! (x{r})',
     battleLost: '💀 هزيمة...', battleLostMsg: '-{n} BTC خسرت...',
     wheelTitle: '😈 سرق منك المنافس!',
@@ -4962,6 +5086,13 @@ const LANGS = {
     wheelLostUpg: 'سرق تحسينك:',
     wheelLostBot: 'سرق بوتك:',
     wheelNothing: 'لم يجد شيئاً!',
+    chartLabel: '📊 رصيد BTC — مخطط مباشر',
+    chartBull: 'صعود', chartBear: 'هبوط', chartWick: 'ذيل',
+    sessLabelTime: '⏱ وقت الجلسة', sessLabelRate: '⚡ BTC/دقيقة الآن', sessLabelEvents: '🎲 أحداث',
+    statTitle2: '📈 المجاميع', renaLeaderTitle: '♾ تصنيف النهضات',
+    shopSectionLabel: '♾️ متجر النهضة',
+    shopSectionDesc: '🎁 بلِّغ نقطة تحوّل للحصول على مكافأة دائمة.<br>المكافآت تبقى بعد كل إعادة — تتراكم للأبد.',
+    skinEquipped: 'مجهّز', skinOwned: 'مملوك',
     tutoSkip: '✕ تخطي',
     tutoSteps: [
       {icon:'₿', title:'مرحباً!', body:"انقر على الزر ₿\nللتعدين البيتكوين الافتراضي.\n\nمجاني تماماً، إنها لعبة!", tip:'💡 هذه اللعبة خيالية — لا يُكسب BTC حقيقي.'},
@@ -4973,15 +5104,28 @@ const LANGS = {
       {icon:'💰', title:'الدعم', body:"اللعبة مجانية!\nالتبرع يساعد على إنشاء\nألعاب جديدة.", tip:'☕ زر 💰 في الأعلى → Ko-fi'},
       {icon:'🎮', title:'انطلق!', body:"أنت تعرف كل شيء.\nعدِّن، حسِّن، راهن واجمع.\n\nحظاً موفقاً!", tip:null},
     ],
+    objectives: {
+      obj_c50:'50 نقرة', obj_c200:'200 نقرة',
+      obj_m500:'عدِّن 500 BTC', obj_m5k:'عدِّن 5,000 BTC', obj_m50k:'عدِّن 50,000 BTC',
+      obj_w1:'اربح رهاناً', obj_w3:'اربح 3 رهانات',
+      obj_b1:'اشتر بوتاً', obj_upg3:'اشتر 3 تحسينات',
+    },
   },
 
   pt: {
     btcLabel:   '₿ BITCOIN MINERADO',
     mineLabel:  'MINERAR',
+    botActive: 'Ativo',
     perClick:   v => `+${v} por clique`,
     autoLabel:  v => `+${v} BTC/s auto`,
     tabUpg: '⚡ MELHORIAS', tabBots: '🤖 BOTS', tabMarket: '📈 MERCADO',
-    tabStats: '📊 STATS', tabAch: '🏆 TROFÉUS', tabSkins: '🎨 SKINS', tabShop: '♾️ LOJA',
+    tabChart: '📊 CHART', tabStats: '📊 STATS', tabAch: '🏆 TROFÉUS', tabSkins: '🎨 SKINS', tabShop: '♾️ LOJA',
+    chartPanelTitle: '📊 SALDO BTC — HISTÓRICO',
+    chartAll: 'Tudo',
+    chartStatTotal: '₿ TOTAL MINERADO', chartStatRate: '⚡ TAXA / MIN',
+    chartStatClick: '👆 BTC / CLIQUE', chartStatBot: '🤖 BTC / SEG (BOTS)',
+    chartBreakdown: 'REPARTIÇÃO DE RECEITAS',
+    chartLblClicks: '👆 Cliques', chartLblBots: '🤖 Bots',
     secClickLabel: '⚡ MELHORIAS DE CLIQUE',
     secBotLabel:   '🤖 AUTO-CLICKERS',
     miseLabel: 'APOSTA', maxBtn: 'MÁX',
@@ -4989,6 +5133,7 @@ const LANGS = {
     enterBet: 'Digite uma aposta',
     chanceLabel: n => `${n}% de chance`,
     gainLabel: '✅ Ganho', loseLabel: '❌ Perde aposta',
+    marketWon: 'GANHOU!', marketLost: 'PERDEU',
     statTitle: '📊 ESTATÍSTICAS',
     sTotalMine: '₿ TOTAL MINERADO', sClics: '🖱 CLIQUES MANUAIS',
     sBtcClic: '⚡ BTC / CLIQUE', sAutoClic: '🤖 AUTO CLIQUES/SEG',
@@ -5023,7 +5168,8 @@ const LANGS = {
     notifBtc:   'BTC minerados', notifClics: 'cliques',
     notifAuto:  'BTC/seg auto', notifWins: 'apostas ganhas',
     nextAchLabel: '🏆 PRÓXIMO TROFÉU',
-    rivalAhead: '⚠️ Ele está te superando!', rivalBehind: '✅ Você o domina',
+    rivalAhead: '⚠️ Ele está a ultrapassar-te!', rivalBehind: '✅ Tu dominas-o',
+    rivalSilent: 'A minerar em silêncio...',
     rivalStole: 'ELE ROUBA!', rivalStoleMsg: 'Ele pegou 2% do seu BTC!',
     rivalSabotage: '⚡ SABOTAR', rivalSabotaged: 'SABOTAGEM!',
     rivalAttacks: '{n} ATACA!',
@@ -5038,6 +5184,7 @@ const LANGS = {
     battleReward: 'Recompensa: x{n} dos seus BTC',
     battleHint: 'CLIQUE O MAIS RÁPIDO POSSÍVEL!',
     battleFlee: '🏳️ Fugir',
+    battleYou: 'TU', battleThem: 'ELE',
     battleWon: '🏆 VITÓRIA!', battleWonMsg: '+{n} BTC ganhos! (x{r})',
     battleLost: '💀 DERROTA...', battleLostMsg: '-{n} BTC perdidos...',
     wheelTitle: '😈 O RIVAL TE ROUBOU!',
@@ -5049,6 +5196,13 @@ const LANGS = {
     wheelLostUpg: 'Roubou sua melhoria:',
     wheelLostBot: 'Roubou seu bot:',
     wheelNothing: 'Não encontrou nada!',
+    chartLabel: '📊 SALDO BTC — GRÁFICO AO VIVO',
+    chartBull: 'Alta', chartBear: 'Baixa', chartWick: 'Pavio',
+    sessLabelTime: '⏱ TEMPO SESSÃO', sessLabelRate: '⚡ BTC/MIN ATUAL', sessLabelEvents: '🎲 EVENTOS',
+    statTitle2: '📈 TOTAIS', renaLeaderTitle: '♾ CLASSIFICAÇÃO RENAISSANCES',
+    shopSectionLabel: '♾️ LOJA RENAISSANCE',
+    shopSectionDesc: '🎁 Alcança um marco de Renaissances para desbloquear uma recompensa permanente.<br>Os bónus sobrevivem a cada reset — acumulam-se para sempre.',
+    skinEquipped: 'Equipado', skinOwned: 'Possuído',
     tutoSkip: '✕ Pular',
     tutoSteps: [
       {icon:'₿', title:'Bem-vindo!', body:"Clique no botão ₿ para\nminar Bitcoin virtual.\n\nÉ gratuito, é um jogo!", tip:'💡 Este jogo é 100% fictício — nenhum BTC real é ganho.'},
@@ -5060,6 +5214,12 @@ const LANGS = {
       {icon:'💰', title:'Apoiar', body:"Este jogo é gratuito!\nUma doação ajuda a criar\nnovos jogos e projetos.", tip:'☕ Botão 💰 acima → Ko-fi'},
       {icon:'🎮', title:'Vamos lá!', body:"Você sabe tudo.\nMineire, melhore, aposte e colecione.\n\nBoa sorte!", tip:null},
     ],
+    objectives: {
+      obj_c50:'50 cliques', obj_c200:'200 cliques',
+      obj_m500:'Minerar 500 BTC', obj_m5k:'Minerar 5.000 BTC', obj_m50k:'Minerar 50.000 BTC',
+      obj_w1:'Ganhar 1 aposta', obj_w3:'Ganhar 3 apostas',
+      obj_b1:'Comprar 1 bot', obj_upg3:'Comprar 3 melhorias',
+    },
   },
 };
 
@@ -5115,6 +5275,45 @@ function applyLang(code) {
   set('stat-lost-mkt',        L.sLostMkt);
   set('stat-trophies-label',  L.sTrophies);
   set('stat-skins-label',     L.sSkins);
+
+  // Chart legend
+  const legBull = document.getElementById('chart-leg-bull');
+  const legBear = document.getElementById('chart-leg-bear');
+  const legWick = document.getElementById('chart-leg-wick');
+  if (legBull) legBull.textContent = L.chartBull || 'Bullish';
+  if (legBear) legBear.textContent = L.chartBear || 'Bearish';
+  if (legWick) legWick.textContent = L.chartWick || 'Wick';
+  const chartLabel = document.getElementById('chart-label-btc');
+  if (chartLabel) chartLabel.textContent = L.chartLabel || '📊 BTC BALANCE — LIVE CHART';
+
+  // Session stats labels
+  const sessTime  = document.getElementById('sess-label-time');
+  const sessRate  = document.getElementById('sess-label-rate');
+  const sessEvts  = document.getElementById('sess-label-events');
+  const statTitle2 = document.getElementById('stat-title-2');
+  const renaSection = document.getElementById('stats-rena-section');
+  if (sessTime) sessTime.textContent  = L.sessLabelTime  || '⏱ SESSION TIME';
+  if (sessRate) sessRate.textContent  = L.sessLabelRate  || '⚡ CURRENT BTC/MIN';
+  if (sessEvts) sessEvts.textContent  = L.sessLabelEvents|| '🎲 EVENTS';
+  if (statTitle2) statTitle2.textContent = L.statTitle2  || '📈 TOTALS';
+  // Renaissance leaderboard title
+  const renaTitle = renaSection && renaSection.querySelector('div');
+  if (renaTitle) renaTitle.textContent = L.renaLeaderTitle || '♾ RENAISSANCE LEADERBOARD';
+
+  // Battle overlay (static HTML in French by default)
+  const battleDesc2 = document.getElementById('battle-desc');
+  if (battleDesc2 && L.battleDesc) battleDesc2.textContent = L.battleDesc;
+  const battleReward2 = document.getElementById('battle-reward');
+  const battleHint2 = document.getElementById('battle-hint');
+  if (battleHint2 && L.battleHint) battleHint2.textContent = L.battleHint;
+
+  // Wheel overlay
+  const wheelTitle2 = document.getElementById('wheel-title');
+  const wheelSub2 = document.getElementById('wheel-subtitle');
+  const wheelSpinBtn = document.getElementById('wheel-spin-btn');
+  if (wheelTitle2 && L.wheelTitle) wheelTitle2.textContent = L.wheelTitle;
+  if (wheelSub2 && L.wheelSubtitle) wheelSub2.textContent = L.wheelSubtitle;
+  if (wheelSpinBtn && L.wheelSpin) wheelSpinBtn.textContent = L.wheelSpin;
 
   // Headers
   set('trophy-header', L.trophyHeader);
@@ -5189,6 +5388,47 @@ function applyLang(code) {
   // Bouton SABOTER (si pas en cooldown)
   const sabBtn = document.getElementById('rival-sabotage-btn');
   if (sabBtn && !sabBtn.disabled) sabBtn.textContent = L.rivalSabotage;
+
+  // Chart panel labels
+  const crbAll = document.getElementById('crb-all');
+  if (crbAll) crbAll.textContent = L.chartAll || 'All';
+  const cStatTotal = document.getElementById('chart-stat-lbl-total');
+  const cStatRate  = document.getElementById('chart-stat-lbl-rate');
+  const cStatClick = document.getElementById('chart-stat-lbl-click');
+  const cStatBot   = document.getElementById('chart-stat-lbl-bot');
+  const cBreakdown = document.getElementById('chart-breakdown-title');
+  const cLblClicks = document.getElementById('chart-lbl-clicks');
+  const cLblBots   = document.getElementById('chart-lbl-bots');
+  if (cStatTotal) cStatTotal.textContent = L.chartStatTotal || '₿ TOTAL MINED';
+  if (cStatRate)  cStatRate.textContent  = L.chartStatRate  || '⚡ RATE / MIN';
+  if (cStatClick) cStatClick.textContent = L.chartStatClick || '👆 BTC / CLICK';
+  if (cStatBot)   cStatBot.textContent   = L.chartStatBot   || '🤖 BTC / SEC (BOTS)';
+  if (cBreakdown) cBreakdown.textContent = L.chartBreakdown || 'INCOME BREAKDOWN';
+  if (cLblClicks) cLblClicks.textContent = L.chartLblClicks || '👆 Clicks';
+  if (cLblBots)   cLblBots.textContent   = L.chartLblBots   || '🤖 Bots';
+  const tabChartEl = document.getElementById('tab-chart');
+  if (tabChartEl) tabChartEl.textContent = L.tabChart || '📊 CHART';
+
+  // Rival status initial text
+  const rivalStatusEl = document.getElementById('rival-status');
+  if (rivalStatusEl && !rivalStatusEl.style.display) {
+    rivalStatusEl.textContent = L.rivalSilent || 'Mining in silence...';
+  }
+  const lblYou  = document.getElementById('battle-lbl-you');
+  const lblThem = document.getElementById('battle-lbl-them');
+  if (lblYou)  lblYou.textContent  = L.battleYou  || 'YOU';
+  if (lblThem) lblThem.textContent = L.battleThem  || 'THEM';
+  // Rival bar labels
+  const rLblYou  = document.getElementById('rival-lbl-you');
+  const rLblThem = document.getElementById('rival-lbl-them');
+  if (rLblYou)  rLblYou.textContent  = L.battleYou  || 'YOU';
+  if (rLblThem) rLblThem.textContent = L.battleThem  || 'THEM';
+
+  // Shop panel header + desc
+  const shopLabel = document.getElementById('sec-shop-label');
+  const shopDesc  = document.getElementById('shop-desc');
+  if (shopLabel) shopLabel.textContent = L.shopSectionLabel || '♾️ RENAISSANCE SHOP';
+  if (shopDesc)  shopDesc.innerHTML    = L.shopSectionDesc  || '🎁 Reach a Renaissance milestone to unlock a permanent reward.<br>Bonuses survive every reset — they accumulate forever.';
 
   // Mise à jour de l'affichage
   updateDisplay();
@@ -5312,7 +5552,9 @@ function showTutoStep(idx) {
   }
 
   const nextBtn = document.getElementById('tuto-next-btn');
-  nextBtn.textContent = idx === steps.length-1 ? '🎮 Go !' : 'Suivant →';
+  const tutoNextLabels = { fr:'Suivant →', en:'Next →', es:'Siguiente →', ar:'التالي →', pt:'Seguinte →' };
+  const tutoLastLabels = { fr:'🎮 Go !', en:'🎮 Go!', es:'🎮 ¡Vamos!', ar:'🎮 انطلق!', pt:'🎮 Vamos!' };
+  nextBtn.textContent = idx === steps.length-1 ? (tutoLastLabels[currentLang]||'🎮 Go!') : (tutoNextLabels[currentLang]||'Next →');
   document.getElementById('tuto-skip-btn').textContent = L.tutoSkip;
 
   // Elements
@@ -5430,17 +5672,17 @@ let _donTimer = setTimeout(openDon, 30 * 60 * 1000);
 
 
 const MILESTONES = [
-  { key:'m100',    check:()=>totalMined>=100,     icon:'₿',  color:'#F7931A', label:()=>( LANGS[currentLang]?.notifBtc||'BTC minés'), value:()=>'100 BTC' },
-  { key:'m1k',     check:()=>totalMined>=1000,    icon:'💰', color:'#F7931A', label:()=>( LANGS[currentLang]?.notifBtc||'BTC minés'), value:()=>'1 000 BTC' },
-  { key:'m10k',    check:()=>totalMined>=10000,   icon:'💎', color:'#627EEA', label:()=>( LANGS[currentLang]?.notifBtc||'BTC minés'), value:()=>'10 000 BTC' },
-  { key:'m100k',   check:()=>totalMined>=100000,  icon:'🐳', color:'#00D97E', label:()=>( LANGS[currentLang]?.notifBtc||'BTC minés'), value:()=>'100 000 BTC' },
-  { key:'m1m',     check:()=>totalMined>=1000000, icon:'🌕', color:'#FFD166', label:()=>( LANGS[currentLang]?.notifBtc||'BTC minés'), value:()=>'1 000 000 BTC' },
-  { key:'c100',    check:()=>totalClics>=100,     icon:'👆', color:'#627EEA', label:()=>( LANGS[currentLang]?.notifClics||'clics'), value:()=>'100 clics' },
-  { key:'c1k',     check:()=>totalClics>=1000,    icon:'⚡', color:'#F7931A', label:()=>( LANGS[currentLang]?.notifClics||'clics'), value:()=>'1 000 clics' },
-  { key:'c10k',    check:()=>totalClics>=10000,   icon:'🦾', color:'#EC4899', label:()=>( LANGS[currentLang]?.notifClics||'clics'), value:()=>'10 000 clics' },
-  { key:'auto1',   check:()=>autoPerSec>=1,       icon:'🤖', color:'#00D97E', label:()=>( LANGS[currentLang]?.notifAuto||'auto/sec'), value:()=>'1 BTC/sec auto' },
-  { key:'auto100', check:()=>autoPerSec>=100,     icon:'🏭', color:'#00D97E', label:()=>( LANGS[currentLang]?.notifAuto||'auto/sec'), value:()=>'100 BTC/sec' },
-  { key:'win10',   check:()=>mWins>=10,           icon:'🎰', color:'#FFD166', label:()=>( LANGS[currentLang]?.notifWins||'paris gagnés'), value:()=>'10 paris gagnés' },
+  { key:'m100',    check:()=>totalMined>=100,     icon:'₿',  color:'#F7931A', label:()=>(LANGS[currentLang]?.notifBtc||'BTC mined'),    value:()=>'100 BTC' },
+  { key:'m1k',     check:()=>totalMined>=1000,    icon:'💰', color:'#F7931A', label:()=>(LANGS[currentLang]?.notifBtc||'BTC mined'),    value:()=>'1,000 BTC' },
+  { key:'m10k',    check:()=>totalMined>=10000,   icon:'💎', color:'#627EEA', label:()=>(LANGS[currentLang]?.notifBtc||'BTC mined'),    value:()=>'10,000 BTC' },
+  { key:'m100k',   check:()=>totalMined>=100000,  icon:'🐳', color:'#00D97E', label:()=>(LANGS[currentLang]?.notifBtc||'BTC mined'),    value:()=>'100,000 BTC' },
+  { key:'m1m',     check:()=>totalMined>=1000000, icon:'🌕', color:'#FFD166', label:()=>(LANGS[currentLang]?.notifBtc||'BTC mined'),    value:()=>'1,000,000 BTC' },
+  { key:'c100',    check:()=>totalClics>=100,     icon:'👆', color:'#627EEA', label:()=>(LANGS[currentLang]?.notifClics||'clicks'),     value:()=>'100' },
+  { key:'c1k',     check:()=>totalClics>=1000,    icon:'⚡', color:'#F7931A', label:()=>(LANGS[currentLang]?.notifClics||'clicks'),     value:()=>'1,000' },
+  { key:'c10k',    check:()=>totalClics>=10000,   icon:'🦾', color:'#EC4899', label:()=>(LANGS[currentLang]?.notifClics||'clicks'),     value:()=>'10,000' },
+  { key:'auto1',   check:()=>autoPerSec>=1,       icon:'🤖', color:'#00D97E', label:()=>(LANGS[currentLang]?.notifAuto||'auto/sec'),    value:()=>'1 BTC/sec' },
+  { key:'auto100', check:()=>autoPerSec>=100,     icon:'🏭', color:'#00D97E', label:()=>(LANGS[currentLang]?.notifAuto||'auto/sec'),    value:()=>'100 BTC/sec' },
+  { key:'win10',   check:()=>mWins>=10,           icon:'🎰', color:'#FFD166', label:()=>(LANGS[currentLang]?.notifWins||'bets won'),    value:()=>'10' },
 ];
 
 const EVENTS = [
@@ -5476,6 +5718,19 @@ const RIVAL_DIFFICULTIES = [
   { key:'nightmare',  label:'🔥 CAUCHEMAR',   color:'#FF6D00', rivalCps:100, goal:200, time:25, reward:2.5 },
   { key:'god',        label:'👑 MODE DIEU',   color:'#FFD700', rivalCps:180, goal:300, time:30, reward:3.0 },
 ];
+
+// Translated difficulty labels per language
+const DIFF_LABELS = {
+  fr: { easy:'😊 FACILE', normal:'😐 NORMAL', hard:'😤 DIFFICILE', extreme:'💀 EXTRÊME', impossible:'☠️ IMPOSSIBLE', nightmare:'🔥 CAUCHEMAR', god:'👑 MODE DIEU' },
+  en: { easy:'😊 EASY',   normal:'😐 NORMAL', hard:'😤 HARD',      extreme:'💀 EXTREME',  impossible:'☠️ IMPOSSIBLE', nightmare:'🔥 NIGHTMARE',  god:'👑 GOD MODE'  },
+  es: { easy:'😊 FÁCIL',  normal:'😐 NORMAL', hard:'😤 DIFÍCIL',   extreme:'💀 EXTREMO',  impossible:'☠️ IMPOSIBLE',  nightmare:'🔥 PESADILLA',  god:'👑 MODO DIOS' },
+  ar: { easy:'😊 سهل',    normal:'😐 عادي',   hard:'😤 صعب',       extreme:'💀 شديد',      impossible:'☠️ مستحيل',     nightmare:'🔥 كابوس',      god:'👑 وضع الإله' },
+  pt: { easy:'😊 FÁCIL',  normal:'😐 NORMAL', hard:'😤 DIFÍCIL',   extreme:'💀 EXTREMO',  impossible:'☠️ IMPOSSÍVEL', nightmare:'🔥 PESADELO',   god:'👑 MODO DEUS' },
+};
+function getDiffLabel(diff) {
+  const labels = DIFF_LABELS[currentLang] || DIFF_LABELS.fr;
+  return labels[diff.key] || diff.label;
+}
 
 // ═══ INIT ═══
 const _savedTheme = localStorage.getItem('cm_theme') || 'night';
@@ -5877,6 +6132,7 @@ function updateRenaissanceLeaderboard() {
 }
 
 
+// (duplicate removed)
 
 // ═══════════════════════════════════════════════════
 //  MINI-OBJECTIFS
@@ -5885,16 +6141,21 @@ var _objBase = { clics:0, mined:0, wins:0, bots:0, upgs:0 };
 var _objClaimed = new Set();
 
 var OBJ_POOL = [
-  { id:'o_c50',   icon:'👆', desc:'50 clics',           reward:50,    check:()=>totalClics>=_objBase.clics+50   },
-  { id:'o_c200',  icon:'⚡', desc:'200 clics',          reward:200,   check:()=>totalClics>=_objBase.clics+200  },
-  { id:'o_m500',  icon:'₿',  desc:'Miner 500 BTC',      reward:500,   check:()=>totalMined>=_objBase.mined+500  },
-  { id:'o_m5k',   icon:'💰', desc:'Miner 5 000 BTC',    reward:5000,  check:()=>totalMined>=_objBase.mined+5000 },
-  { id:'o_m50k',  icon:'💎', desc:'Miner 50 000 BTC',   reward:50000, check:()=>totalMined>=_objBase.mined+50000},
-  { id:'o_w1',    icon:'🎲', desc:'Gagner 1 pari',      reward:1000,  check:()=>mWins>=_objBase.wins+1          },
-  { id:'o_w3',    icon:'🃏', desc:'Gagner 3 paris',     reward:5000,  check:()=>mWins>=_objBase.wins+3          },
-  { id:'o_b1',    icon:'🤖', desc:'Acheter 1 bot',      reward:200,   check:()=>autoLevels.filter(l=>l>0).length>_objBase.bots },
-  { id:'o_upg3',  icon:'⛏', desc:'Acheter 3 amélios',  reward:300,   check:()=>upgLevels.reduce((a,b)=>a+b,0)>=_objBase.upgs+3 },
+  { id:'o_c50',   icon:'👆', descKey:'obj_c50',   reward:50,    check:()=>totalClics>=_objBase.clics+50   },
+  { id:'o_c200',  icon:'⚡', descKey:'obj_c200',  reward:200,   check:()=>totalClics>=_objBase.clics+200  },
+  { id:'o_m500',  icon:'₿',  descKey:'obj_m500',  reward:500,   check:()=>totalMined>=_objBase.mined+500  },
+  { id:'o_m5k',   icon:'💰', descKey:'obj_m5k',   reward:5000,  check:()=>totalMined>=_objBase.mined+5000 },
+  { id:'o_m50k',  icon:'💎', descKey:'obj_m50k',  reward:50000, check:()=>totalMined>=_objBase.mined+50000},
+  { id:'o_w1',    icon:'🎲', descKey:'obj_w1',    reward:1000,  check:()=>mWins>=_objBase.wins+1          },
+  { id:'o_w3',    icon:'🃏', descKey:'obj_w3',    reward:5000,  check:()=>mWins>=_objBase.wins+3          },
+  { id:'o_b1',    icon:'🤖', descKey:'obj_b1',    reward:200,   check:()=>autoLevels.filter(l=>l>0).length>_objBase.bots },
+  { id:'o_upg3',  icon:'⛏', descKey:'obj_upg3',  reward:300,   check:()=>upgLevels.reduce((a,b)=>a+b,0)>=_objBase.upgs+3 },
 ];
+
+function getObjDesc(obj) {
+  const L = LANGS[currentLang] || LANGS.fr;
+  return (L.objectives && L.objectives[obj.descKey]) || obj.descKey;
+}
 
 function pickObjectives() {
   _objBase = {
@@ -5909,8 +6170,7 @@ function pickObjectives() {
   _currentObjs = pool.slice(0,3);
   _objClaimed = new Set();
   buildObjectives();
-  updateThemeCards();
-}
+}  updateThemeCards();
 
 
 function buildObjectives() {
@@ -5922,7 +6182,7 @@ function buildObjectives() {
     const claimed = _objClaimed.has(idx);
     const div = document.createElement('div');
     div.className = 'obj-card' + (claimed ? ' claimed' : done ? ' done' : '');
-    div.innerHTML = `<span class="obj-icon">${obj.icon}</span><div><div>${obj.desc}</div></div><span class="obj-reward">+${fmtN(obj.reward)} ₿</span>`;
+    div.innerHTML = `<span class="obj-icon">${obj.icon}</span><div><div>${getObjDesc(obj)}</div></div><span class="obj-reward">+${fmtN(obj.reward)} ₿</span>`;
     if (done && !claimed) {
       div.style.cursor = 'pointer';
       div.style.borderColor = '#00D97E';
@@ -6191,28 +6451,38 @@ function exportSave() {
 }
 
 function _showExportModal(code) {
+  const L = LANGS[currentLang] || LANGS.en;
+  const titles = { fr:'📤 CODE DE SAUVEGARDE', en:'📤 SAVE CODE', es:'📤 CÓDIGO DE GUARDADO', ar:'📤 كود الحفظ', pt:'📤 CÓDIGO DE SAVE' };
+  const hints  = { fr:'Copie ce code pour sauvegarder ta progression.', en:'Copy this code to save your progress.', es:'Copia este código para guardar tu progreso.', ar:'انسخ هذا الكود لحفظ تقدمك.', pt:'Copia este código para guardar o teu progresso.' };
+  const closes = { fr:'Fermer', en:'Close', es:'Cerrar', ar:'إغلاق', pt:'Fechar' };
+  const lang = currentLang;
   const modal = document.createElement('div');
   modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;display:flex;align-items:center;justify-content:center';
   modal.innerHTML = `
     <div style="background:#0D1420;border:1px solid #1A2840;border-radius:14px;padding:20px;max-width:90vw;width:340px">
-      <div style="font-size:11px;font-weight:700;color:#F7931A;margin-bottom:10px">📤 CODE DE SAUVEGARDE</div>
+      <div style="font-size:11px;font-weight:700;color:#F7931A;margin-bottom:10px">${titles[lang]||titles.en}</div>
       <textarea readonly style="width:100%;height:80px;background:#080C14;border:1px solid #1A2840;border-radius:6px;color:#627EEA;font-size:8px;padding:8px;font-family:monospace;resize:none">${code}</textarea>
-      <div style="font-size:8px;color:#445577;margin:8px 0">Copie ce code pour sauvegarder ta progression.</div>
-      <button onclick="this.closest('div[style]').remove()" style="width:100%;padding:8px;background:#111B2E;border:1px solid #1A2840;border-radius:6px;color:#8899BB;font-family:monospace;font-size:9px;cursor:pointer">Fermer</button>
+      <div style="font-size:8px;color:#445577;margin:8px 0">${hints[lang]||hints.en}</div>
+      <button onclick="this.closest('div[style]').remove()" style="width:100%;padding:8px;background:#111B2E;border:1px solid #1A2840;border-radius:6px;color:#8899BB;font-family:monospace;font-size:9px;cursor:pointer">${closes[lang]||closes.en}</button>
     </div>`;
   document.body.appendChild(modal);
 }
 
 function importSave() {
+  const lang = currentLang;
+  const titles = { fr:'📥 IMPORTER UNE SAUVEGARDE', en:'📥 IMPORT A SAVE', es:'📥 IMPORTAR UN GUARDADO', ar:'📥 استيراد حفظ', pt:'📥 IMPORTAR UM SAVE' };
+  const placeholders = { fr:'Colle ton code ici...', en:'Paste your code here...', es:'Pega tu código aquí...', ar:'الصق كودك هنا...', pt:'Cola o teu código aqui...' };
+  const cancels = { fr:'Annuler', en:'Cancel', es:'Cancelar', ar:'إلغاء', pt:'Cancelar' };
+  const imports = { fr:'Importer', en:'Import', es:'Importar', ar:'استيراد', pt:'Importar' };
   const modal = document.createElement('div');
   modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999;display:flex;align-items:center;justify-content:center';
   modal.innerHTML = `
     <div style="background:#0D1420;border:1px solid #1A2840;border-radius:14px;padding:20px;max-width:90vw;width:340px">
-      <div style="font-size:11px;font-weight:700;color:#F7931A;margin-bottom:10px">📥 IMPORTER UNE SAUVEGARDE</div>
-      <textarea id="_import_txt" placeholder="Colle ton code ici..." style="width:100%;height:80px;background:#080C14;border:1px solid #1A2840;border-radius:6px;color:#627EEA;font-size:8px;padding:8px;font-family:monospace;resize:none"></textarea>
+      <div style="font-size:11px;font-weight:700;color:#F7931A;margin-bottom:10px">${titles[lang]||titles.en}</div>
+      <textarea id="_import_txt" placeholder="${placeholders[lang]||placeholders.en}" style="width:100%;height:80px;background:#080C14;border:1px solid #1A2840;border-radius:6px;color:#627EEA;font-size:8px;padding:8px;font-family:monospace;resize:none"></textarea>
       <div style="display:flex;gap:6px;margin-top:10px">
-        <button onclick="this.closest('div[style]').remove()" style="flex:1;padding:8px;background:#111B2E;border:1px solid #1A2840;border-radius:6px;color:#8899BB;font-family:monospace;font-size:9px;cursor:pointer">Annuler</button>
-        <button onclick="_doImport()" style="flex:1;padding:8px;background:rgba(247,147,26,.15);border:1px solid #F7931A55;border-radius:6px;color:#F7931A;font-family:monospace;font-size:9px;cursor:pointer">Importer</button>
+        <button onclick="this.closest('div[style]').remove()" style="flex:1;padding:8px;background:#111B2E;border:1px solid #1A2840;border-radius:6px;color:#8899BB;font-family:monospace;font-size:9px;cursor:pointer">${cancels[lang]||cancels.en}</button>
+        <button onclick="_doImport()" style="flex:1;padding:8px;background:rgba(247,147,26,.15);border:1px solid #F7931A55;border-radius:6px;color:#F7931A;font-family:monospace;font-size:9px;cursor:pointer">${imports[lang]||imports.en}</button>
       </div>
     </div>`;
   document.body.appendChild(modal);
@@ -6544,17 +6814,257 @@ function showThemeIndicator(theme) {
 // ═══════════════════════════════════════════════════
 
 
-function recordChartPoint() {
-  const btcMin  = totalMined - _lastChartBtc;
-  const clicMin = totalClics - _lastChartClics;
-  _lastChartBtc   = totalMined;
-  _lastChartClics = totalClics;
+// recordChartPoint kept for compat — real chart uses candlestick system
 
-  chartBtcData.push(btcMin);
-  chartClicData.push(clicMin);
-  if (chartBtcData.length  > CHART_MAX_POINTS) chartBtcData.shift();
-  if (chartClicData.length > CHART_MAX_POINTS) chartClicData.shift();
+// ═══════════════════════════════════════════════════
+//  ONGLET CHART — COURBE HISTORIQUE BTC
+// ═══════════════════════════════════════════════════
 
+// Historique complet du solde BTC (1 point toutes les 5s)
+const BTC_HISTORY = [];          // { t: timestamp, v: btc balance, mined: totalMined }
+const BTC_HISTORY_MAX = 2160;    // 3h à 1 point/5s
+let _btcHistInterval = null;
+let _chartRange = '5m';          // range actif
+let _clickIncome5s  = 0;         // BTC gagnés par clics sur les 5 dernières secondes
+let _botIncome5s    = 0;         // BTC gagnés par bots sur les 5 dernières secondes
+
+function initBtcHistory() {
+  // Enregistrer un point toutes les 5s
+  _btcHistInterval = setInterval(() => {
+    BTC_HISTORY.push({ t: Date.now(), v: btc, mined: totalMined, ci: _clickIncome5s, bi: _botIncome5s });
+    if (BTC_HISTORY.length > BTC_HISTORY_MAX) BTC_HISTORY.shift();
+    _clickIncome5s = 0;
+    _botIncome5s   = 0;
+    // Redessiner si l'onglet chart est visible
+    if (!document.getElementById('panel-chart')?.classList.contains('hidden')) {
+      drawBtcHistoryChart();
+      updateChartPanel();
+    }
+  }, 5000);
+  // Premier point immédiat
+  BTC_HISTORY.push({ t: Date.now(), v: btc, mined: totalMined, ci: 0, bi: 0 });
+}
+
+function setChartRange(range) {
+  _chartRange = range;
+  // Update active button
+  ['5m','15m','30m','1h','all'].forEach(r => {
+    const btn = document.getElementById('crb-' + r);
+    if (btn) btn.classList.toggle('active', r === range);
+  });
+  drawBtcHistoryChart();
+}
+
+function getHistorySlice() {
+  if (_chartRange === 'all') return BTC_HISTORY;
+  const durations = { '5m': 5*60*1000, '15m': 15*60*1000, '30m': 30*60*1000, '1h': 60*60*1000 };
+  const ms = durations[_chartRange] || 5*60*1000;
+  const cutoff = Date.now() - ms;
+  const slice = BTC_HISTORY.filter(p => p.t >= cutoff);
+  return slice.length >= 2 ? slice : BTC_HISTORY.slice(-Math.max(2, Math.ceil(ms / 5000)));
+}
+
+function drawBtcHistoryChart() {
+  const canvas = document.getElementById('btc-history-canvas');
+  if (!canvas) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.offsetWidth  || 300;
+  const H = canvas.offsetHeight || 160;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0, 0, W, H);
+
+  const data = getHistorySlice();
+
+  if (data.length < 2) {
+    const waitTexts = { fr:'Collecte des données...', en:'Collecting data...', es:'Recopilando datos...', ar:'جمع البيانات...', pt:'A recolher dados...' };
+    ctx.fillStyle = 'rgba(68,85,119,.4)';
+    ctx.font = '9px Space Mono, monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(waitTexts[currentLang] || waitTexts.en, W/2, H/2);
+    return;
+  }
+
+  const pad = { top: 14, bot: 20, left: 6, right: 6 };
+  const cW = W - pad.left - pad.right;
+  const cH = H - pad.top  - pad.bot;
+
+  const vals = data.map(p => p.v);
+  let minV = Math.min(...vals);
+  let maxV = Math.max(...vals);
+  if (minV === maxV) { minV = Math.max(0, minV * 0.9); maxV = maxV * 1.1 + 1; }
+  const range = maxV - minV || 1;
+
+  const toX = (i) => pad.left + (i / (data.length - 1)) * cW;
+  const toY = (v) => pad.top + cH - ((v - minV) / range) * cH;
+
+  // Grid horizontale
+  ctx.strokeStyle = 'rgba(68,85,119,.15)';
+  ctx.lineWidth = 0.5;
+  for (let i = 0; i <= 3; i++) {
+    const y = pad.top + (cH / 3) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    const v = maxV - (range / 3) * i;
+    const lbl = v >= 1e9 ? (v/1e9).toFixed(1)+'B' : v >= 1e6 ? (v/1e6).toFixed(1)+'M' : v >= 1e3 ? (v/1e3).toFixed(0)+'k' : v.toFixed(0);
+    ctx.fillStyle = 'rgba(68,85,119,.55)';
+    ctx.font = '6px Space Mono, monospace';
+    ctx.textAlign = 'right';
+    ctx.fillText(lbl, W - pad.right - 2, y - 2);
+  }
+
+  // Temps en bas
+  ctx.fillStyle = 'rgba(68,85,119,.5)';
+  ctx.font = '6px Space Mono, monospace';
+  ctx.textAlign = 'left';
+  const t0 = new Date(data[0].t);
+  const t1 = new Date(data[data.length-1].t);
+  const fmt2 = (d) => d.getHours().toString().padStart(2,'0')+':'+d.getMinutes().toString().padStart(2,'0');
+  ctx.fillText(fmt2(t0), pad.left, H - 4);
+  ctx.textAlign = 'right';
+  ctx.fillText(fmt2(t1), W - pad.right, H - 4);
+
+  // Dégradé de remplissage
+  const grad = ctx.createLinearGradient(0, pad.top, 0, H - pad.bot);
+  grad.addColorStop(0, 'rgba(247,147,26,.25)');
+  grad.addColorStop(1, 'rgba(247,147,26,.02)');
+
+  // Courbe remplie
+  ctx.beginPath();
+  data.forEach((p, i) => {
+    const x = toX(i), y = toY(p.v);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  // Fermer pour fill
+  ctx.lineTo(toX(data.length - 1), H - pad.bot);
+  ctx.lineTo(toX(0), H - pad.bot);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Courbe principale
+  ctx.beginPath();
+  data.forEach((p, i) => {
+    const x = toX(i), y = toY(p.v);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  });
+  ctx.strokeStyle = '#F7931A';
+  ctx.lineWidth   = 1.8;
+  ctx.lineJoin    = 'round';
+  ctx.stroke();
+
+  // Point actuel
+  const lastX = toX(data.length - 1);
+  const lastY = toY(data[data.length - 1].v);
+  ctx.beginPath();
+  ctx.arc(lastX, lastY, 3.5, 0, Math.PI * 2);
+  ctx.fillStyle = '#F7931A';
+  ctx.fill();
+  ctx.strokeStyle = '#fff';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Prix actuel
+  const curStr = btc >= 1e9 ? (btc/1e9).toFixed(2)+'B' : btc >= 1e6 ? (btc/1e6).toFixed(2)+'M' : btc >= 1e3 ? (btc/1e3).toFixed(1)+'k' : btc.toFixed(0);
+  const tooltip = document.getElementById('btc-chart-tooltip');
+  if (tooltip) {
+    const pctChange = data.length >= 2 && data[0].v > 0
+      ? (((data[data.length-1].v - data[0].v) / Math.max(data[0].v, 1)) * 100)
+      : 0;
+    const sign = pctChange >= 0 ? '+' : '';
+    tooltip.innerHTML = `<span style="color:#F7931A;font-size:10px;font-weight:700">₿ ${curStr}</span><br><span style="color:${pctChange>=0?'#00D97E':'#FF4560'};font-size:8px">${sign}${pctChange.toFixed(1)}%</span>`;
+  }
+}
+
+function updateChartPanel() {
+  const data = getHistorySlice();
+  const L = LANGS[currentLang] || LANGS.fr;
+
+  // Stats totaux
+  const totalEl  = document.getElementById('chart-stat-total');
+  const rateEl   = document.getElementById('chart-stat-rate');
+  const clickEl  = document.getElementById('chart-stat-click');
+  const botEl    = document.getElementById('chart-stat-bot');
+  if (totalEl) totalEl.textContent = fmtN(totalMined);
+  if (clickEl) clickEl.textContent = fmtN(btcPerClick);
+  if (botEl)   botEl.textContent   = fmtN(autoPerSec) + '/s';
+
+  // Taux BTC/min sur la période visible
+  if (data.length >= 2 && rateEl) {
+    const deltaTime  = (data[data.length-1].t - data[0].t) / 60000; // minutes
+    const deltaMined = data[data.length-1].mined - data[0].mined;
+    const rate = deltaTime > 0 ? deltaMined / deltaTime : 0;
+    rateEl.textContent = fmtN(Math.max(0, rate)) + '/min';
+  }
+
+  // Répartition clics vs bots (estimation basée sur btcPerClick et autoPerSec)
+  const clickRate = btcPerClick * Math.max(1, totalClics / Math.max(1, (Date.now() - _sessionStart) / 1000));
+  const botRate   = autoPerSec;
+  const total     = clickRate + botRate;
+  const pctClicks = total > 0 ? Math.round((clickRate / total) * 100) : 50;
+  const pctBots   = 100 - pctClicks;
+
+  const barClicks = document.getElementById('chart-bar-clicks');
+  const barBots   = document.getElementById('chart-bar-bots');
+  const pctClicksEl = document.getElementById('chart-pct-clicks');
+  const pctBotsEl   = document.getElementById('chart-pct-bots');
+  if (barClicks) barClicks.style.width = pctClicks + '%';
+  if (barBots)   barBots.style.width   = pctBots   + '%';
+  if (pctClicksEl) pctClicksEl.textContent = pctClicks + '%';
+  if (pctBotsEl)   pctBotsEl.textContent   = pctBots   + '%';
+
+  // Traductions labels
+  const tabChart = document.getElementById('tab-chart');
+  if (tabChart) tabChart.textContent = L.tabChart || '📊 CHART';
+  const panelTitle = document.getElementById('chart-panel-title');
+  if (panelTitle) panelTitle.textContent = L.chartPanelTitle || '📊 BTC BALANCE — HISTORIQUE';
+}
+
+// Intercepter les gains de clics pour la répartition
+const _origMineClick = null; // tracking via btcPerClick directement
+
+// ── CANDLESTICK CHART DATA ──
+// Each candle: { open, high, low, close, time }
+const candleData = [];
+let _lastCandleBtc = 0;
+let _candleOpen = 0;
+let _candleHigh = 0;
+let _candleLow  = Infinity;
+const CANDLE_INTERVAL = 15000; // 15s per candle
+let _candleInterval = null;
+
+function initCandleChart() {
+  _lastCandleBtc = btc;
+  _candleOpen    = btc;
+  _candleHigh    = btc;
+  _candleLow     = btc;
+  _candleInterval = setInterval(tickCandle, CANDLE_INTERVAL);
+  // Update high/low every 2s within a candle
+  setInterval(() => {
+    if (btc > _candleHigh) _candleHigh = btc;
+    if (btc < _candleLow)  _candleLow  = btc;
+    drawChart();
+  }, 2000);
+}
+
+function tickCandle() {
+  const close = btc;
+  // Push completed candle
+  candleData.push({
+    open:  _candleOpen,
+    high:  _candleHigh,
+    low:   _candleLow === Infinity ? _candleOpen : _candleLow,
+    close: close,
+    time:  Date.now()
+  });
+  if (candleData.length > CHART_MAX_POINTS) candleData.shift();
+  // Start new candle
+  _candleOpen = close;
+  _candleHigh = close;
+  _candleLow  = close;
   drawChart();
   updateSessionStats();
 }
@@ -6562,35 +7072,128 @@ function recordChartPoint() {
 function drawChart() {
   const canvas = document.getElementById('chart-btc');
   if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.offsetWidth || 260;
-  const H = 80;
-  canvas.width = W; canvas.height = H;
+  const ctx  = canvas.getContext('2d');
+  const W    = canvas.offsetWidth  || 280;
+  const H    = 120;
+  const dpr  = window.devicePixelRatio || 1;
+  canvas.width  = W * dpr;
+  canvas.height = H * dpr;
+  canvas.style.width  = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.scale(dpr, dpr);
   ctx.clearRect(0, 0, W, H);
 
-  if (chartBtcData.length < 2) return;
-
-  const maxBtc  = Math.max(...chartBtcData,  1);
-  const maxClic = Math.max(...chartClicData, 1);
-
-  function drawLine(data, maxVal, color) {
-    ctx.beginPath();
-    data.forEach((v, i) => {
-      const x = (i / (CHART_MAX_POINTS - 1)) * W;
-      const y = H - (v / maxVal) * (H - 6) - 3;
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    });
-    ctx.strokeStyle = color;
-    ctx.lineWidth   = 1.5;
-    ctx.stroke();
-    // Fill
-    ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
-    ctx.fillStyle = color + '22';
-    ctx.fill();
+  // Include live partial candle
+  const liveCandle = {
+    open:  _candleOpen,
+    high:  _candleHigh,
+    low:   _candleLow === Infinity ? _candleOpen : Math.min(_candleLow, btc),
+    close: btc,
+    live:  true
+  };
+  const allCandles = [...candleData, liveCandle].filter(c => c.open > 0 || c.close > 0);
+  if (allCandles.length < 1) {
+    // Placeholder text
+    ctx.fillStyle = 'rgba(68,85,119,.4)';
+    ctx.font = '9px Space Mono, monospace';
+    ctx.textAlign = 'center';
+    const _candleWait = { fr:'Données après 15 sec...', en:'Chart loads after 15 sec of play', es:'Datos tras 15 seg...', ar:'البيانات بعد 15 ثانية...', pt:'Dados após 15 seg...' };
+    ctx.fillText(_candleWait[currentLang] || _candleWait.en, W/2, H/2);
+    return;
   }
 
-  drawLine(chartBtcData,  maxBtc,  '#F7931A');
-  drawLine(chartClicData, maxClic, '#627EEA');
+  // Compute range
+  const allVals = allCandles.flatMap(c => [c.open, c.high, c.low, c.close]).filter(v => v > 0 && isFinite(v));
+  let minV = Math.min(...allVals);
+  let maxV = Math.max(...allVals);
+  if (minV === maxV) { minV *= 0.9; maxV *= 1.1; }
+  const range  = maxV - minV || 1;
+  const pad    = { top: 10, bot: 6, left: 4, right: 4 };
+  const chartH = H - pad.top - pad.bot;
+  const chartW = W - pad.left - pad.right;
+
+  const toY = v => pad.top + chartH - ((v - minV) / range) * chartH;
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(68,85,119,.18)';
+  ctx.lineWidth   = 0.5;
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (chartH / 4) * i;
+    ctx.beginPath(); ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    // Price label
+    const price = maxV - (range / 4) * i;
+    ctx.fillStyle = 'rgba(68,85,119,.6)';
+    ctx.font = '7px Space Mono, monospace';
+    ctx.textAlign = 'right';
+    const label = price >= 1e9 ? (price/1e9).toFixed(1)+'B' : price >= 1e6 ? (price/1e6).toFixed(1)+'M' : price >= 1e3 ? (price/1e3).toFixed(1)+'k' : price.toFixed(0);
+    ctx.fillText(label, W - pad.right - 1, y - 1);
+  }
+
+  // Candles
+  const n    = allCandles.length;
+  const slotW= chartW / Math.max(n, 1);
+  const bodyW = Math.max(2, slotW * 0.6);
+
+  allCandles.forEach((c, i) => {
+    const x      = pad.left + i * slotW + slotW / 2;
+    const isBull = c.close >= c.open;
+    const color  = c.live
+      ? (isBull ? 'rgba(0,217,126,.6)' : 'rgba(255,69,96,.6)')
+      : (isBull ? '#00D97E' : '#FF4560');
+    const wickCol = c.live ? 'rgba(98,126,234,.5)' : '#627EEA';
+
+    const yOpen  = toY(c.open);
+    const yClose = toY(c.close);
+    const yHigh  = toY(c.high);
+    const yLow   = toY(c.low);
+
+    // Wick
+    ctx.strokeStyle = wickCol;
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.moveTo(x, yHigh);
+    ctx.lineTo(x, yLow);
+    ctx.stroke();
+
+    // Body
+    const bodyTop = Math.min(yOpen, yClose);
+    const bodyBot = Math.max(yOpen, yClose);
+    const bodyH   = Math.max(1, bodyBot - bodyTop);
+    ctx.fillStyle   = color;
+    ctx.strokeStyle = color;
+    ctx.lineWidth   = 0.5;
+    ctx.fillRect(x - bodyW/2, bodyTop, bodyW, bodyH);
+
+    // Live candle border glow
+    if (c.live) {
+      ctx.strokeStyle = isBull ? '#00D97E' : '#FF4560';
+      ctx.lineWidth   = 1;
+      ctx.strokeRect(x - bodyW/2, bodyTop, bodyW, bodyH);
+    }
+  });
+
+  // Current price line
+  const yCurrent = toY(btc);
+  ctx.setLineDash([3, 3]);
+  ctx.strokeStyle = '#F7931A88';
+  ctx.lineWidth   = 1;
+  ctx.beginPath();
+  ctx.moveTo(pad.left, yCurrent);
+  ctx.lineTo(W - pad.right, yCurrent);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Current price badge
+  ctx.fillStyle = '#F7931A';
+  const priceStr = btc >= 1e9 ? (btc/1e9).toFixed(2)+'B' : btc >= 1e6 ? (btc/1e6).toFixed(2)+'M' : btc >= 1e3 ? (btc/1e3).toFixed(1)+'k' : btc.toFixed(0);
+  ctx.font = 'bold 8px Space Mono, monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText('₿ ' + priceStr, pad.left + 2, yCurrent - 2);
+}
+
+// Legacy compat — recordChartPoint still called every 30s
+function recordChartPoint() {
+  updateSessionStats();
 }
 
 function updateSessionStats() {
@@ -6609,10 +7212,14 @@ function updateSessionStats() {
   el('s-events',       eventCount);
 }
 
-// Enregistrer un point toutes les 30s
+// Enregistrer un point toutes les 30s (stats seulement)
 _chartInterval = setInterval(recordChartPoint, 30000);
 // Premier point après 5s
 setTimeout(recordChartPoint, 5000);
+// Init candlestick chart
+setTimeout(initCandleChart, 1000);
+// Init historique BTC pour l'onglet Chart
+setTimeout(initBtcHistory, 500);
 
 
 // ═══════════════════════════════════════════════════
@@ -6632,7 +7239,7 @@ function initRival() {
 function scheduleRivalTick() {
   clearInterval(_rivalTimer);
   _rivalTimer = setInterval(() => {
-    const targetSpeed = Math.max(0.000005, autoPerSec * 0.6 + 0.00001);
+    const targetSpeed = Math.max(0.000005, btcPerClick * autoPerSec * 0.6 + 0.00001);
     rivalSpeed += (targetSpeed - rivalSpeed) * 0.05;
     rivalBtc   += rivalSpeed * (1 + Math.random() * 0.3);
     updateRivalUI();
@@ -6883,7 +7490,7 @@ function updateRivalBarDiff() {
     statusEl.style.color = battleDiff ? battleDiff.color : '#FF4560';
   }
   if (badgeEl && battleDiff) {
-    badgeEl.textContent  = battleDiff.label;
+    badgeEl.textContent  = getDiffLabel(battleDiff);
     badgeEl.style.background = battleDiff.color + '22';
     badgeEl.style.color      = battleDiff.color;
     badgeEl.style.borderColor= battleDiff.color + '55';
@@ -6903,7 +7510,7 @@ function startBattle() {
   // Remplir l'overlay
   const badge = document.getElementById('battle-diff-badge');
   if (badge) {
-    badge.textContent  = diff.label;
+    badge.textContent  = getDiffLabel(diff);
     badge.style.background = diff.color + '22';
     badge.style.color      = diff.color;
     badge.style.border     = '1px solid ' + diff.color + '55';
@@ -7052,32 +7659,11 @@ function endBattle(won) {
 }
 
 function fleeBattle() {
-  // Fuite : on stoppe la battle proprement sans passer par endBattle(false)
-  // pour éviter la roue de vol — juste une petite pénalité BTC
-  battleActive = false;
-  clearInterval(_battleInterval);
-  clearTimeout(_battleTimeout);
-  document.getElementById('battle-overlay')?.classList.add('hidden');
-  rivalSabotageCooldown = Date.now() + 180000; // 3 min de cooldown (moins punitif que défaite)
+  endBattle(false);
+  // Pénalité légère pour la fuite
   const penalty = btc * 0.02;
   btc = Math.max(0, btc - penalty);
   updateDisplay();
-  scheduleSave();
-  // Prochain rival dans 5 min
-  clearTimeout(_nextRivalTimer);
-  _nextRivalTimer = setTimeout(() => {
-    rivalBtc   = 0.00005;
-    rivalSpeed = 0.000005;
-    spawnRival();
-  }, 300000);
-  const statusEl = document.getElementById('rival-status');
-  if (statusEl) {
-    const L = LANGS[currentLang] || LANGS.fr;
-    statusEl.textContent = L.rivalDefeated || '✅ Fui ! Prochain rival dans 5 min...';
-    statusEl.style.color = '#8899BB';
-  }
-  const badge = document.getElementById('rival-diff-badge-inline');
-  if (badge) { badge.textContent = '⏳ 5min'; badge.style.color = '#445577'; badge.style.borderColor = '#1A2840'; badge.style.background = 'transparent'; }
 }
 
 
@@ -7397,11 +7983,11 @@ function introSelectLang(code) {
   const menuEl = document.getElementById('intro-menu');
   const L = LANGS[code] || LANGS.fr;
 
-  // textes selon la langue choisie
+  // Adapter les textes du menu
   const startBtn = document.getElementById('menu-start-btn');
   const menuSub  = document.getElementById('menu-sub');
 
-  // fr/en/es/ar/pt
+  // Textes selon langue
   const menuTexts = {
     fr: { start: '▶ COMMENCER', sub: 'MINE · AMÉLIORE · RENAISSANCE' },
     en: { start: '▶ START GAME', sub: 'MINE · UPGRADE · REBIRTH' },
@@ -7413,7 +7999,7 @@ function introSelectLang(code) {
   if (startBtn) startBtn.textContent = txt.start;
   if (menuSub)  menuSub.textContent  = txt.sub;
 
-  // animation transition
+  // Slide out lang, slide in menu
   if (langEl) { langEl.style.animation = 'introSlideUp .4s reverse forwards'; setTimeout(() => { langEl.style.display='none'; }, 400); }
   setTimeout(() => { if (menuEl) menuEl.classList.add('show'); }, 350);
 }
@@ -7421,60 +8007,36 @@ function introSelectLang(code) {
 function introStart() {
   const overlay = document.getElementById('intro-overlay');
   if (!overlay) return;
-  // on cache l'overlay
+  // Fade out
   overlay.style.transition = 'opacity .6s ease';
   overlay.style.opacity = '0';
   setTimeout(() => {
     overlay.classList.add('hidden');
     overlay.style.opacity = '';
-    // tuto seulement au 1er lancement
+    // Lancer le tuto si première fois
     const tuto = localStorage.getItem('cm_tuto_done');
     if (!tuto) startTuto();
   }, 600);
 }
 
 function introQuit() {
-  // Fermer l'onglet / page
   window.close();
-  // au cas où le navigateur bloque
-  document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#445577;font-size:12px">Tu peux fermer cet onglet.</div>';
+  const L = LANGS[currentLang] || LANGS.en;
+  const msg = { fr:'Tu peux fermer cet onglet.', en:'You can close this tab.', es:'Puedes cerrar esta pestaña.', ar:'يمكنك إغلاق هذا التبويب.', pt:'Podes fechar este separador.' };
+  document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:monospace;color:#445577;font-size:12px">' + (msg[currentLang]||msg.en) + '</div>';
 }
 
-function setQuality(val) {
-  // ULTRA : plus de particules flottantes, code stream visible
-  // NORMALE : particules réduites, code stream discret
-  const cs = document.getElementById('code-stream');
-  if (val === 'ultra') {
-    if (cs) cs.style.opacity = '1';
-    nebulaA = 0.08;
-  } else if (val === 'haute') {
-    if (cs) cs.style.opacity = '0.5';
-    nebulaA = 0.04;
-  } else {
-    if (cs) cs.style.opacity = '0';
-    nebulaA = 0;
-  }
-  localStorage.setItem('cm_quality', val);
-}
-
-// chargement de la page
+// Init au chargement
 window.addEventListener('DOMContentLoaded', () => {
-  // l'intro s'occupe de la langue
+  // L'intro cinématique gère la langue — on cache les overlays internes du jeu
   const lo = document.getElementById('lang-overlay');
   if (lo) lo.classList.add('hidden');
   const io = document.getElementById('intro-overlay');
   if (io) io.classList.add('hidden');
-  // on applique la langue sauvegardée
+  // Appliquer la langue transmise par l'intro
   const savedLang = localStorage.getItem('cm_lang');
   if (savedLang && LANGS[savedLang]) {
     applyLang(savedLang);
-  }
-  // on applique la qualité sauvegardée
-  const savedQ = localStorage.getItem('cm_quality');
-  if (savedQ) {
-    const qSel = document.querySelector('.opts-select');
-    if (qSel) qSel.value = savedQ;
-    setQuality(savedQ);
   }
 });
 
@@ -7491,6 +8053,25 @@ window.addEventListener('DOMContentLoaded', () => {
   </div>
   <div style="font-size:9px;color:#627EEA;margin-bottom:8px" id="shop-progress"></div>
   <div id="shop-list"></div>
+</div>
+
+<!-- ── PUB EMPLACEMENT ── -->
+<div id="ad-banner" style="
+  width: 100%;
+  height: 50px;
+  background: rgba(6,12,20,.95);
+  border-top: 1px solid #1A2840;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+">
+  <ins class="adsbygoogle"
+    style="display:inline-block;width:320px;height:50px"
+    data-ad-client="ca-pub-4355916824484692"
+    data-ad-slot="XXXXXXXXXX"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 </div>
 
 <!-- ── BARRE MUSIQUE ── -->
@@ -7521,6 +8102,30 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="rebirth-title" id="rebirth-title">RENAISSANCE</div>
     <div class="rebirth-num" id="rebirth-num">#1</div>
     <div class="rebirth-bonus" id="rebirth-bonus">+50% BTC/clic</div>
+  </div>
+
+  <!-- PUB EMPLACEMENT -->
+  <div style="
+    position:absolute;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%);
+    width:320px;
+    height:50px;
+    background:rgba(6,12,20,.7);
+    border:1px solid rgba(167,139,250,.2);
+    border-radius:6px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    z-index:3;
+  ">
+    <ins class="adsbygoogle"
+      style="display:inline-block;width:320px;height:50px"
+      data-ad-client="ca-pub-4355916824484692"
+      data-ad-slot="XXXXXXXXXX"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
   </div>
 </div>
 
@@ -7560,7 +8165,8 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="menu-game-sub" id="menu-sub">MINE · AMÉLIORE · RENAISSANCE</div>
     <button class="menu-btn menu-btn-start" id="menu-start-btn" onclick="introStart()">▶ COMMENCER</button>
     <button class="menu-btn menu-btn-quit" onclick="introQuit()">✕ QUITTER</button>
-    </div>
+    <div class="menu-version">v4.0 — par felix1404</div>
+  </div>
 </div>
 
 <div class="save-indicator" id="save-indicator">✓ SAVED</div>
@@ -7574,12 +8180,12 @@ window.addEventListener('DOMContentLoaded', () => {
     <div class="battle-reward" id="battle-reward">Récompense : x1.2 BTC total</div>
     <div class="battle-bars">
       <div class="battle-bar-row">
-        <span class="battle-bar-lbl" style="color:#627EEA">TOI</span>
+        <span class="battle-bar-lbl" style="color:#627EEA" id="battle-lbl-you">TOI</span>
         <div class="battle-bar-track"><div class="battle-bar-fill battle-bar-you" id="battle-bar-you" style="width:0%"></div></div>
         <span class="battle-bar-val" style="color:#627EEA" id="battle-val-you">0</span>
       </div>
       <div class="battle-bar-row">
-        <span class="battle-bar-lbl" style="color:#FF4560">LUI</span>
+        <span class="battle-bar-lbl" style="color:#FF4560" id="battle-lbl-them">LUI</span>
         <div class="battle-bar-track"><div class="battle-bar-fill battle-bar-them" id="battle-bar-them" style="width:0%"></div></div>
         <span class="battle-bar-val" style="color:#FF4560" id="battle-val-them">0</span>
       </div>
